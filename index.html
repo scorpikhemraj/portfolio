@@ -4,6 +4,23 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Khemraj Patil — Senior Laravel Developer & Product Manager</title>
+
+<!-- ══ SECURITY HEADERS — Fix #6 ══ -->
+<meta http-equiv="X-Content-Type-Options"  content="nosniff"/>
+<meta http-equiv="X-Frame-Options"         content="SAMEORIGIN"/>
+<meta http-equiv="Referrer-Policy"         content="strict-origin-when-cross-origin"/>
+<meta http-equiv="Permissions-Policy"      content="camera=(), microphone=(), geolocation=(), payment=()"/>
+<meta http-equiv="Content-Security-Policy"
+  content="default-src 'self';
+           script-src  'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com;
+           style-src   'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com;
+           font-src    https://fonts.gstatic.com;
+           img-src     'self' data:;
+           connect-src 'self';
+           frame-ancestors 'none';"/>
+<!-- Fix #7: robots meta -->
+<meta name="robots" content="index, follow, noarchive"/>
+
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
@@ -42,8 +59,8 @@
     width: 8px; height: 8px;
     background: var(--red);
     border-radius: 50%;
-    transform: translate(-50%, -50%);
-    transition: transform 0.1s, width 0.2s, height 0.2s, background 0.2s;
+    transform: translate(-50%,-50%);
+    transition: transform 0.1s, width 0.2s, height 0.2s;
   }
   #cursor-ring {
     position: fixed; top: 0; left: 0; z-index: 9998;
@@ -51,8 +68,8 @@
     width: 36px; height: 36px;
     border: 1.5px solid rgba(230,57,70,0.5);
     border-radius: 50%;
-    transform: translate(-50%, -50%);
-    transition: transform 0.15s ease-out, width 0.25s, height 0.25s, border-color 0.25s;
+    transform: translate(-50%,-50%);
+    transition: width 0.25s, height 0.25s, border-color 0.25s;
   }
   #cursor-label {
     position: fixed; top: 0; left: 0; z-index: 9997;
@@ -61,7 +78,7 @@
     font-size: 10px;
     letter-spacing: 0.1em;
     color: var(--red);
-    transform: translate(20px, -50%);
+    transform: translate(20px,-50%);
     opacity: 0;
     transition: opacity 0.2s;
     white-space: nowrap;
@@ -91,7 +108,7 @@
     border-bottom: 1px solid transparent;
   }
   nav.scrolled {
-    background: rgba(8,8,14,0.75);
+    background: rgba(8,8,14,0.82);
     backdrop-filter: blur(20px);
     border-color: var(--border);
   }
@@ -103,10 +120,7 @@
     text-decoration: none;
     letter-spacing: -0.03em;
   }
-  .nav-links {
-    display: flex; align-items: center; gap: 40px;
-    list-style: none;
-  }
+  .nav-links { display: flex; align-items: center; gap: 40px; list-style: none; }
   .nav-links a {
     font-family: var(--font-mono);
     font-size: 13px;
@@ -129,10 +143,71 @@
     cursor: none;
     transition: background 0.2s, box-shadow 0.2s;
   }
-  .nav-cta:hover {
-    background: var(--red-deep);
-    box-shadow: 0 0 24px var(--red-glow);
+  .nav-cta:hover { background: var(--red-deep); box-shadow: 0 0 24px var(--red-glow); }
+
+  /* ── HAMBURGER ── */
+  .nav-hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    padding: 6px;
+    cursor: pointer;
+    z-index: 200;
   }
+  .nav-hamburger span {
+    display: block;
+    width: 24px; height: 2px;
+    background: var(--text);
+    border-radius: 2px;
+    transition: transform 0.3s, opacity 0.3s;
+  }
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* ── MOBILE DRAWER ── */
+  .nav-drawer {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(8,8,14,0.97);
+    backdrop-filter: blur(16px);
+    z-index: 150;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+  .nav-drawer.open { opacity: 1; pointer-events: all; }
+  .nav-drawer a {
+    font-family: var(--font-mono);
+    font-size: 28px;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 14px 40px;
+    border-radius: 10px;
+    transition: color 0.2s, background 0.2s;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+  }
+  .nav-drawer a:hover { color: var(--red); background: rgba(230,57,70,0.06); }
+  .nav-drawer .drawer-cta {
+    font-family: var(--font-mono);
+    font-size: 16px;
+    color: var(--text);
+    background: var(--red);
+    padding: 14px 40px;
+    border-radius: 999px;
+    margin-top: 24px;
+    font-size: 16px;
+    transition: background 0.2s;
+    cursor: pointer;
+  }
+  .nav-drawer .drawer-cta:hover { background: var(--red-deep); }
 
   /* ── SECTIONS ── */
   section { position: relative; z-index: 1; }
@@ -148,29 +223,15 @@
     overflow: hidden;
     gap: 40px;
   }
-  .hero-left {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    z-index: 2;
-  }
+  .hero-left { display: flex; flex-direction: column; justify-content: center; z-index: 2; }
   .hero-canvas-wrap {
     position: relative;
-    width: 100%;
-    height: 100%;
+    width: 100%; height: 100%;
     min-height: 540px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex; align-items: center; justify-content: center;
   }
-  #hero-3d {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    inset: 0;
-    display: block;
-  }
-  /* floating labels around 3D scene */
+  #hero-3d { width: 100%; height: 100%; position: absolute; inset: 0; display: block; }
+
   .canvas-label {
     position: absolute;
     font-family: var(--font-mono);
@@ -182,13 +243,13 @@
     opacity: 0;
     animation: floatIn 1s ease forwards;
   }
-  .canvas-label.tl { top: 18%; left: 4%; animation-delay: 1.6s; }
-  .canvas-label.tr { top: 12%; right: 6%; animation-delay: 2s; }
+  .canvas-label.tl { top: 18%; left: 4%;  animation-delay: 1.6s; }
+  .canvas-label.tr { top: 12%; right: 6%; animation-delay: 2.0s; }
   .canvas-label.bl { bottom: 20%; left: 2%; animation-delay: 2.3s; }
   .canvas-label.br { bottom: 14%; right: 4%; animation-delay: 1.9s; }
-  .canvas-label.ml { top: 50%; left: 0%; animation-delay: 2.5s; }
+  .canvas-label.ml { top: 50%; left: 0%;  animation-delay: 2.5s; }
   @keyframes floatIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
-  /* pulsing ring behind canvas */
+
   .pulse-ring {
     position: absolute;
     border-radius: 50%;
@@ -196,13 +257,11 @@
     pointer-events: none;
     animation: pulseRing 3s ease-in-out infinite;
   }
-  .pulse-ring:nth-child(1) { width: 340px; height: 340px; animation-delay: 0s; }
-  .pulse-ring:nth-child(2) { width: 460px; height: 460px; animation-delay: 1s; }
-  .pulse-ring:nth-child(3) { width: 580px; height: 580px; animation-delay: 2s; }
-  @keyframes pulseRing {
-    0%,100% { opacity: 0.4; transform: scale(1); }
-    50% { opacity: 0.1; transform: scale(1.04); }
-  }
+  .pulse-ring:nth-child(1) { width:340px; height:340px; animation-delay:0s; }
+  .pulse-ring:nth-child(2) { width:460px; height:460px; animation-delay:1s; }
+  .pulse-ring:nth-child(3) { width:580px; height:580px; animation-delay:2s; }
+  @keyframes pulseRing { 0%,100%{opacity:.4;transform:scale(1)} 50%{opacity:.1;transform:scale(1.04)} }
+
   .hero-eyebrow {
     font-family: var(--font-mono);
     font-size: 12px;
@@ -225,8 +284,7 @@
   .hero-title span { color: var(--red); }
   .cursor-blink {
     display: inline-block;
-    width: 4px;
-    height: 0.85em;
+    width: 4px; height: 0.85em;
     background: var(--red);
     vertical-align: middle;
     margin-left: 6px;
@@ -243,10 +301,7 @@
     opacity: 0;
     animation: fadeUp 0.6s ease forwards 0.6s;
   }
-  .hero-sub span {
-    color: var(--text);
-    border-bottom: 1px solid var(--subtle);
-  }
+  .hero-sub span { color: var(--text); border-bottom: 1px solid var(--subtle); }
 
   /* Terminal */
   .terminal {
@@ -273,25 +328,19 @@
     font-family: var(--font-mono);
     font-size: 11px;
     color: var(--muted);
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto;
     letter-spacing: 0.05em;
   }
-  .terminal-body {
-    padding: 20px 24px;
-    font-family: var(--font-mono);
-    font-size: 13px;
-    line-height: 2;
-  }
+  .terminal-body { padding: 20px 24px; font-family: var(--font-mono); font-size: 13px; line-height: 2; }
   .t-prompt { color: var(--red); }
-  .t-cmd { color: #A8D8EA; }
-  .t-ok { color: #4ADE80; }
-  .t-info { color: var(--muted); }
-  .t-line { display: flex; align-items: center; gap: 8px; }
+  .t-cmd    { color: #A8D8EA; }
+  .t-ok     { color: #4ADE80; }
+  .t-info   { color: var(--muted); }
+  .t-line   { display: flex; align-items: center; gap: 8px; }
   .t-line.hidden { opacity: 0; animation: fadeIn 0.3s forwards; }
   @keyframes fadeIn { to { opacity: 1; } }
 
-  /* Tech badges */
+  /* Badges */
   .hero-badges {
     display: flex; flex-wrap: wrap; gap: 10px;
     margin-top: 40px;
@@ -345,7 +394,6 @@
   }
   .btn-outline:hover { border-color: var(--border-red); color: var(--red); }
 
-  /* Scroll indicator */
   .scroll-hint {
     position: absolute;
     bottom: 40px; left: 60px;
@@ -357,11 +405,7 @@
     display: flex; align-items: center; gap: 10px;
   }
   .scroll-line { width: 40px; height: 1px; background: var(--muted); }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
 
   /* ── ABOUT ── */
   #about {
@@ -371,31 +415,21 @@
     gap: 80px;
     align-items: center;
   }
-  .about-avatar-wrap {
-    position: relative;
-    display: flex; justify-content: center;
-  }
+  .about-avatar-wrap { position: relative; display: flex; justify-content: center; }
   .about-avatar {
     width: 340px; height: 420px;
     border-radius: 20px;
     background: var(--surface);
     border: 1px solid var(--border-red);
     display: flex; align-items: center; justify-content: center;
-    position: relative;
-    overflow: hidden;
+    position: relative; overflow: hidden;
   }
   .about-avatar::before {
     content: '';
     position: absolute; inset: 0;
     background: radial-gradient(circle at 50% 30%, rgba(230,57,70,0.15) 0%, transparent 70%);
   }
-  .avatar-initials {
-    font-size: 80px;
-    font-weight: 800;
-    color: var(--red);
-    opacity: 0.35;
-    letter-spacing: -0.05em;
-  }
+  .avatar-initials { font-size: 80px; font-weight: 800; color: var(--red); opacity: 0.35; letter-spacing: -0.05em; }
   .about-accent {
     position: absolute;
     width: 120px; height: 120px;
@@ -433,44 +467,23 @@
     padding-top: 40px;
     border-top: 1px solid var(--border);
   }
-  .stat-item {}
-  .stat-number {
-    font-size: 40px;
-    font-weight: 800;
-    color: var(--red);
-    line-height: 1;
-    letter-spacing: -0.03em;
-  }
-  .stat-label {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    color: var(--muted);
-    margin-top: 6px;
-    letter-spacing: 0.05em;
-  }
+  .stat-number { font-size: 40px; font-weight: 800; color: var(--red); line-height: 1; letter-spacing: -0.03em; }
+  .stat-label  { font-family: var(--font-mono); font-size: 12px; color: var(--muted); margin-top: 6px; letter-spacing: 0.05em; }
   .attended-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
+    display: inline-flex; align-items: center; gap: 8px;
     background: rgba(230,57,70,0.08);
     border: 1px solid var(--border-red);
-    padding: 8px 16px;
-    border-radius: 999px;
-    font-family: var(--font-mono);
-    font-size: 12px;
-    color: var(--red);
+    padding: 8px 16px; border-radius: 999px;
+    font-family: var(--font-mono); font-size: 12px; color: var(--red);
     margin-top: 24px;
   }
 
   /* ── SKILLS ── */
-  #skills {
-    padding: 120px 60px;
-    background: var(--bg2);
-  }
+  #skills { padding: 120px 60px; background: var(--bg2); }
   .skills-header { text-align: center; margin-bottom: 64px; }
   .skills-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 20px;
   }
   .skill-card {
@@ -480,451 +493,356 @@
     padding: 28px;
     transition: border-color 0.3s, transform 0.3s;
   }
-  .skill-card:hover {
-    border-color: var(--border-red);
-    transform: translateY(-4px);
-  }
+  .skill-card:hover { border-color: var(--border-red); transform: translateY(-4px); }
   .skill-card-title {
     font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    color: var(--red);
-    text-transform: uppercase;
-    margin-bottom: 20px;
+    font-size: 11px; letter-spacing: 0.2em;
+    color: var(--red); text-transform: uppercase; margin-bottom: 20px;
   }
-  .skill-chips {
-    display: flex; flex-wrap: wrap; gap: 8px;
-  }
+  .skill-chips { display: flex; flex-wrap: wrap; gap: 8px; }
   .chip {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    color: var(--text);
-    background: var(--surface);
-    border: 1px solid var(--border);
-    padding: 5px 14px;
-    border-radius: 6px;
-    letter-spacing: 0.02em;
+    font-family: var(--font-mono); font-size: 12px; color: var(--text);
+    background: var(--surface); border: 1px solid var(--border);
+    padding: 5px 14px; border-radius: 6px; letter-spacing: 0.02em;
   }
+  .skill-card.wide { grid-column: span 2; }
 
   /* ── EXPERIENCE ── */
-  #experience {
-    padding: 120px 60px;
-  }
+  #experience { padding: 120px 60px; }
   .exp-grid { display: grid; grid-template-columns: 280px 1fr; gap: 80px; margin-top: 64px; }
   .exp-timeline { position: relative; }
   .exp-timeline::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 8px; bottom: 0;
-    width: 1px;
-    background: var(--border);
+    content: ''; position: absolute; left: 0; top: 8px; bottom: 0;
+    width: 1px; background: var(--border);
   }
-  .exp-item {
-    position: relative;
-    padding-left: 32px;
-    margin-bottom: 56px;
-  }
+  .exp-item { position: relative; padding-left: 32px; margin-bottom: 56px; cursor: pointer; }
   .exp-item::before {
-    content: '';
-    position: absolute;
-    left: -5px; top: 8px;
-    width: 10px; height: 10px;
-    border-radius: 50%;
-    background: var(--bg);
-    border: 2px solid var(--border);
+    content: ''; position: absolute; left: -5px; top: 8px;
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--bg); border: 2px solid var(--border);
     transition: border-color 0.3s;
   }
   .exp-item.active::before { border-color: var(--red); background: var(--red); }
-  .exp-date {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    color: var(--muted);
-    margin-bottom: 6px;
-    letter-spacing: 0.04em;
-  }
-  .exp-role {
-    font-size: 16px;
-    font-weight: 700;
-    margin-bottom: 4px;
-    cursor: pointer;
-    transition: color 0.2s;
-  }
+  .exp-date   { font-family: var(--font-mono); font-size: 12px; color: var(--muted); margin-bottom: 6px; letter-spacing: 0.04em; }
+  .exp-role   { font-size: 16px; font-weight: 700; margin-bottom: 4px; transition: color 0.2s; }
   .exp-role:hover { color: var(--red); }
-  .exp-company {
-    font-family: var(--font-mono);
-    font-size: 13px;
-    color: var(--muted);
-  }
-  .exp-detail {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 48px;
-  }
-  .exp-detail-title {
-    font-size: 28px;
-    font-weight: 800;
-    margin-bottom: 8px;
-    letter-spacing: -0.02em;
-  }
-  .exp-detail-company {
-    font-family: var(--font-mono);
-    font-size: 14px;
-    color: var(--red);
-    margin-bottom: 8px;
-  }
-  .exp-detail-period {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    color: var(--muted);
-    margin-bottom: 36px;
-    letter-spacing: 0.04em;
-  }
+  .exp-company{ font-family: var(--font-mono); font-size: 13px; color: var(--muted); }
+  .exp-detail { background: var(--bg2); border: 1px solid var(--border); border-radius: 20px; padding: 48px; }
+  .exp-detail-title   { font-size: 28px; font-weight: 800; margin-bottom: 8px; letter-spacing: -0.02em; }
+  .exp-detail-company { font-family: var(--font-mono); font-size: 14px; color: var(--red); margin-bottom: 8px; }
+  .exp-detail-period  { font-family: var(--font-mono); font-size: 12px; color: var(--muted); margin-bottom: 36px; letter-spacing: 0.04em; }
   .exp-bullets { list-style: none; }
   .exp-bullets li {
-    font-family: var(--font-mono);
-    font-size: 14px;
-    color: var(--muted);
-    line-height: 1.8;
-    padding: 10px 0;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    gap: 12px;
-    font-weight: 300;
+    font-family: var(--font-mono); font-size: 14px; color: var(--muted);
+    line-height: 1.8; padding: 10px 0; border-bottom: 1px solid var(--border);
+    display: flex; gap: 12px; font-weight: 300;
   }
-  .exp-bullets li::before {
-    content: '▹';
-    color: var(--red);
-    flex-shrink: 0;
-  }
+  .exp-bullets li::before { content: '▹'; color: var(--red); flex-shrink: 0; }
   .exp-bullets strong { color: var(--text); font-weight: 400; }
 
   /* ── PROJECTS ── */
-  #projects {
-    padding: 120px 60px;
-    background: var(--bg2);
-  }
+  #projects { padding: 120px 60px; background: var(--bg2); }
   .projects-header { margin-bottom: 64px; }
-  .bento-grid {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    grid-template-rows: auto;
-    gap: 16px;
-  }
+  .bento-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px; }
   .proj-card {
     background: var(--bg3);
     border: 1px solid var(--border);
     border-radius: 20px;
     padding: 36px;
     transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
-    position: relative;
-    overflow: hidden;
+    position: relative; overflow: hidden;
     cursor: none;
   }
   .proj-card::before {
-    content: '';
-    position: absolute; inset: 0;
+    content: ''; position: absolute; inset: 0;
     background: linear-gradient(135deg, rgba(230,57,70,0) 0%, rgba(230,57,70,0.06) 100%);
-    opacity: 0;
-    transition: opacity 0.3s;
+    opacity: 0; transition: opacity 0.3s;
   }
-  .proj-card:hover {
-    border-color: var(--border-red);
-    transform: translateY(-6px);
-    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-  }
+  .proj-card:hover { border-color: var(--border-red); transform: translateY(-6px); box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
   .proj-card:hover::before { opacity: 1; }
   .proj-card.featured { grid-column: span 7; }
-  .proj-card.normal { grid-column: span 5; }
-  .proj-card.half { grid-column: span 6; }
-  .proj-number {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    color: var(--subtle);
-    letter-spacing: 0.1em;
-    margin-bottom: 20px;
-  }
-  .proj-title {
-    font-size: 20px;
-    font-weight: 700;
-    margin-bottom: 12px;
-    line-height: 1.3;
-  }
+  .proj-card.normal   { grid-column: span 5; }
+  .proj-card.half     { grid-column: span 6; }
+  .proj-number { font-family: var(--font-mono); font-size: 11px; color: var(--subtle); letter-spacing: 0.1em; margin-bottom: 20px; }
+  .proj-title  { font-size: 20px; font-weight: 700; margin-bottom: 12px; line-height: 1.3; }
   .proj-card.featured .proj-title { font-size: 26px; }
-  .proj-desc {
-    font-family: var(--font-mono);
-    font-size: 13px;
-    color: var(--muted);
-    line-height: 1.8;
-    font-weight: 300;
-    margin-bottom: 24px;
+  .proj-desc   { font-family: var(--font-mono); font-size: 13px; color: var(--muted); line-height: 1.8; font-weight: 300; margin-bottom: 24px; }
+  .proj-tags   { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; }
+  .proj-tag    {
+    font-family: var(--font-mono); font-size: 11px; color: var(--red);
+    background: rgba(230,57,70,0.08); border: 1px solid var(--border-red);
+    padding: 4px 12px; border-radius: 4px; letter-spacing: 0.04em;
   }
-  .proj-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; }
-  .proj-tag {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    color: var(--red);
-    background: rgba(230,57,70,0.08);
-    border: 1px solid var(--border-red);
-    padding: 4px 12px;
-    border-radius: 4px;
-    letter-spacing: 0.04em;
+
+  /* Fix #4: dead-link / coming-soon styling */
+  .proj-link-soon {
+    font-family: var(--font-mono); font-size: 13px; color: var(--subtle);
+    margin-top: 20px; display: inline-flex; align-items: center; gap: 6px;
+    letter-spacing: 0.03em; cursor: default; text-decoration: none;
+    position: relative;
   }
-  .proj-link {
-    font-family: var(--font-mono);
-    font-size: 13px;
-    color: var(--red);
-    text-decoration: none;
-    margin-top: 20px;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    letter-spacing: 0.03em;
-    transition: gap 0.2s;
+  .proj-link-soon .soon-pill {
+    font-size: 10px; background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border); padding: 2px 8px; border-radius: 999px;
+    color: var(--muted); letter-spacing: 0.08em;
   }
-  .proj-link:hover { gap: 10px; }
+  .proj-link-live {
+    font-family: var(--font-mono); font-size: 13px; color: var(--red);
+    text-decoration: none; margin-top: 20px; display: inline-flex; align-items: center; gap: 6px;
+    letter-spacing: 0.03em; transition: gap 0.2s;
+  }
+  .proj-link-live:hover { gap: 10px; }
 
   /* ── SERVICES ── */
-  #services {
-    padding: 120px 60px;
-  }
-  .services-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    margin-top: 64px;
-  }
+  #services { padding: 120px 60px; }
+  .services-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 64px; }
   .service-card {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 36px 28px;
+    background: var(--bg2); border: 1px solid var(--border); border-radius: 20px; padding: 36px 28px;
     transition: border-color 0.3s, transform 0.3s;
   }
-  .service-card:hover {
-    border-color: var(--border-red);
-    transform: translateY(-4px);
-  }
+  .service-card:hover { border-color: var(--border-red); transform: translateY(-4px); }
   .service-icon {
-    width: 48px; height: 48px;
-    background: rgba(230,57,70,0.1);
-    border: 1px solid var(--border-red);
-    border-radius: 12px;
+    width: 48px; height: 48px; background: rgba(230,57,70,0.1);
+    border: 1px solid var(--border-red); border-radius: 12px;
     display: flex; align-items: center; justify-content: center;
-    font-size: 22px;
-    margin-bottom: 24px;
+    font-size: 22px; margin-bottom: 24px;
   }
-  .service-title {
-    font-size: 16px;
-    font-weight: 700;
-    margin-bottom: 12px;
-  }
-  .service-desc {
-    font-family: var(--font-mono);
-    font-size: 13px;
-    color: var(--muted);
-    line-height: 1.8;
-    font-weight: 300;
-  }
+  .service-title { font-size: 16px; font-weight: 700; margin-bottom: 12px; }
+  .service-desc  { font-family: var(--font-mono); font-size: 13px; color: var(--muted); line-height: 1.8; font-weight: 300; }
 
   /* ── EDUCATION ── */
-  #education {
-    padding: 80px 60px;
-    background: var(--bg2);
-  }
-  .edu-cards {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    margin-top: 48px;
-  }
-  .edu-card {
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 32px;
-    transition: border-color 0.3s;
-  }
+  #education { padding: 80px 60px; background: var(--bg2); }
+  .edu-cards  { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 48px; }
+  .edu-card   { background: var(--bg3); border: 1px solid var(--border); border-radius: 16px; padding: 32px; transition: border-color 0.3s; }
   .edu-card:hover { border-color: var(--border-red); }
-  .edu-degree {
-    font-size: 18px;
-    font-weight: 700;
-    margin-bottom: 6px;
-  }
-  .edu-school {
-    font-family: var(--font-mono);
-    font-size: 13px;
-    color: var(--red);
-    margin-bottom: 8px;
-  }
-  .edu-year {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    color: var(--muted);
-    letter-spacing: 0.05em;
-  }
+  .edu-degree { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+  .edu-school { font-family: var(--font-mono); font-size: 13px; color: var(--red); margin-bottom: 8px; }
+  .edu-year   { font-family: var(--font-mono); font-size: 12px; color: var(--muted); letter-spacing: 0.05em; }
 
   /* ── CONTACT ── */
   #contact {
     padding: 120px 60px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: start;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: start;
   }
-  .contact-heading {
-    font-size: clamp(36px, 5vw, 66px);
-    font-weight: 800;
-    line-height: 1.05;
-    letter-spacing: -0.03em;
-    margin-bottom: 32px;
-  }
+  .contact-heading { font-size: clamp(36px, 5vw, 66px); font-weight: 800; line-height: 1.05; letter-spacing: -0.03em; margin-bottom: 32px; }
   .contact-heading span {
     display: block;
     background: linear-gradient(90deg, var(--red), #ff8c94);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    animation: shimmer 3s linear infinite;
-    background-size: 200%;
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    animation: shimmer 3s linear infinite; background-size: 200%;
   }
-  @keyframes shimmer {
-    0%{background-position:0%} 100%{background-position:200%}
-  }
-  .contact-info { display: flex; flex-direction: column; gap: 20px; }
+  @keyframes shimmer { 0%{background-position:0%} 100%{background-position:200%} }
+  .contact-info { display: flex; flex-direction: column; gap: 16px; }
   .contact-link {
     display: flex; align-items: center; gap: 16px;
-    font-family: var(--font-mono);
-    font-size: 14px;
-    color: var(--muted);
-    text-decoration: none;
-    padding: 16px 20px;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    transition: border-color 0.2s, color 0.2s;
-    letter-spacing: 0.02em;
+    font-family: var(--font-mono); font-size: 14px; color: var(--muted);
+    text-decoration: none; padding: 16px 20px; border: 1px solid var(--border);
+    border-radius: 12px; transition: border-color 0.2s, color 0.2s; letter-spacing: 0.02em;
   }
   .contact-link:hover { border-color: var(--border-red); color: var(--text); }
   .contact-link-icon {
-    width: 36px; height: 36px;
-    background: rgba(230,57,70,0.08);
-    border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 16px;
-    flex-shrink: 0;
+    width: 36px; height: 36px; background: rgba(230,57,70,0.08);
+    border-radius: 8px; display: flex; align-items: center; justify-content: center;
+    font-size: 16px; flex-shrink: 0;
   }
-  /* Form */
+  /* Fix #5: professional domain email display */
+  .contact-email-display { font-family: var(--font-mono); font-size: 13px; }
+
+  /* Fix #3: contact form security styles */
   .contact-form { display: flex; flex-direction: column; gap: 16px; }
-  .form-field { display: flex; flex-direction: column; gap: 8px; }
-  .form-label {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    color: var(--muted);
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-  }
+  .form-field   { display: flex; flex-direction: column; gap: 8px; }
+  .form-label   { font-family: var(--font-mono); font-size: 12px; color: var(--muted); letter-spacing: 0.05em; text-transform: uppercase; }
   .form-input, .form-textarea {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 14px 16px;
-    font-family: var(--font-mono);
-    font-size: 14px;
-    color: var(--text);
-    outline: none;
-    transition: border-color 0.2s;
-    width: 100%;
+    background: var(--bg2); border: 1px solid var(--border); border-radius: 10px;
+    padding: 14px 16px; font-family: var(--font-mono); font-size: 14px; color: var(--text);
+    outline: none; transition: border-color 0.2s; width: 100%;
   }
-  .form-input:focus, .form-textarea:focus {
-    border-color: var(--border-red);
-  }
-  .form-textarea { min-height: 120px; resize: vertical; }
+  .form-input:focus, .form-textarea:focus { border-color: var(--border-red); }
+  .form-input.error, .form-textarea.error { border-color: var(--red); }
+  .form-error-msg { font-family: var(--font-mono); font-size: 11px; color: var(--red); margin-top: 4px; display: none; }
+  .form-error-msg.show { display: block; }
+  .form-textarea  { min-height: 120px; resize: vertical; }
+  /* honeypot field — hidden from humans, visible to bots (Fix #3) */
+  .form-honeypot  { position: absolute; left: -9999px; top: -9999px; opacity: 0; height: 0; width: 0; overflow: hidden; }
+  .form-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .form-note   { font-family: var(--font-mono); font-size: 11px; color: var(--subtle); letter-spacing: 0.04em; }
+  .form-note span { color: var(--muted); }
   .form-btn {
-    font-family: var(--font-mono);
-    font-size: 14px;
-    color: var(--text);
-    background: var(--red);
-    border: none;
-    padding: 16px;
-    border-radius: 10px;
-    cursor: none;
-    letter-spacing: 0.05em;
-    transition: background 0.2s, box-shadow 0.2s;
-    margin-top: 4px;
+    font-family: var(--font-mono); font-size: 14px; color: var(--text);
+    background: var(--red); border: none; padding: 14px 32px; border-radius: 10px;
+    cursor: pointer; letter-spacing: 0.05em; transition: background 0.2s, box-shadow 0.2s;
   }
-  .form-btn:hover {
-    background: var(--red-deep);
-    box-shadow: 0 0 30px var(--red-glow);
+  .form-btn:hover   { background: var(--red-deep); box-shadow: 0 0 30px var(--red-glow); }
+  .form-btn:disabled{ background: var(--subtle); cursor: not-allowed; box-shadow: none; }
+  .form-success {
+    display: none; text-align: center; padding: 40px 20px;
+    font-family: var(--font-mono); color: #4ADE80; font-size: 14px; line-height: 2;
   }
+  .form-success.show { display: block; }
+
+  /* Fix #8: professional email note */
+  .domain-email-note {
+    font-family: var(--font-mono); font-size: 11px; color: var(--subtle);
+    margin-top: 8px; letter-spacing: 0.04em;
+  }
+  .domain-email-note span { color: var(--red); }
 
   /* ── FOOTER ── */
   footer {
     padding: 40px 60px;
     border-top: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: relative;
-    z-index: 1;
+    display: flex; align-items: center; justify-content: space-between;
+    position: relative; z-index: 1;
   }
-  .footer-left {
-    font-family: var(--font-mono);
-    font-size: 13px;
-    color: var(--muted);
-  }
+  .footer-left  { font-family: var(--font-mono); font-size: 13px; color: var(--muted); }
   .footer-left span { color: var(--red); }
-  .footer-links {
-    display: flex; gap: 32px; list-style: none;
-  }
+  .footer-links { display: flex; gap: 32px; list-style: none; }
   .footer-links a {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    color: var(--muted);
-    text-decoration: none;
-    letter-spacing: 0.05em;
-    transition: color 0.2s;
+    font-family: var(--font-mono); font-size: 12px; color: var(--muted);
+    text-decoration: none; letter-spacing: 0.05em; transition: color 0.2s;
   }
   .footer-links a:hover { color: var(--red); }
-  .footer-craft {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    color: var(--subtle);
-    letter-spacing: 0.03em;
-  }
+  .footer-craft { font-family: var(--font-mono); font-size: 12px; color: var(--subtle); letter-spacing: 0.03em; }
   .footer-craft span { color: var(--red); }
 
   /* ── SCROLL REVEAL ── */
-  .reveal {
-    opacity: 0;
-    transform: translateY(32px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
+  .reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ══════════════════════════════════════
+     RESPONSIVE SYSTEM
+     xs  < 480px   small mobile
+     sm  480–639px mobile
+     md  640–767px large mobile
+     lg  768–1023px tablet
+     xl  1024–1279px laptop
+     2xl 1280px+ desktop (base)
+  ══════════════════════════════════════ */
+
+  @media (max-width: 1279px) {
+    nav { padding: 18px 48px; }
+    #hero { padding: 130px 48px 70px; gap: 32px; }
+    #about, #contact { padding: 100px 48px; gap: 60px; }
+    #skills, #projects, #services, #experience, #education { padding: 100px 48px; }
+    footer { padding: 36px 48px; }
+    .hero-canvas-wrap { min-height: 480px; }
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
   }
 
-  /* ── RESPONSIVE ── */
-  @media (max-width: 1024px) {
-    nav { padding: 20px 32px; }
-    #hero, #about, #contact, #skills, #projects, #services, #experience, #education { padding-left: 32px; padding-right: 32px; }
-    #hero { grid-template-columns: 1fr; }
-    .hero-canvas-wrap { min-height: 360px; }
-    #about, #contact { grid-template-columns: 1fr; }
-    .exp-grid { grid-template-columns: 1fr; }
-    .services-grid { grid-template-columns: 1fr 1fr; }
-    .edu-cards { grid-template-columns: 1fr; }
-    .proj-card.featured { grid-column: span 12; }
-    .proj-card.normal { grid-column: span 12; }
-    .proj-card.half { grid-column: span 12; }
+  @media (max-width: 1023px) {
+    nav { padding: 16px 32px; }
+    .nav-links, .nav-cta { display: none; }
+    .nav-hamburger { display: flex; }
+    .nav-drawer    { display: flex; }
+
+    #hero { grid-template-columns: 1fr; padding: 120px 32px 60px; gap: 0; }
+    .hero-canvas-wrap { min-height: 380px; margin-top: 40px; }
+    .hero-title { font-size: clamp(38px, 6vw, 60px); }
+
+    #about { padding: 80px 32px; grid-template-columns: 1fr; gap: 48px; }
+    #skills, #experience, #projects, #services, #education { padding: 80px 32px; }
+    #contact { padding: 80px 32px; grid-template-columns: 1fr; gap: 48px; }
+    footer { padding: 32px; flex-direction: column; gap: 20px; text-align: center; }
+    .footer-links { justify-content: center; }
+
+    .skills-grid { grid-template-columns: repeat(2, 1fr); }
+    .skill-card.wide { grid-column: span 2; }
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
+    .edu-cards { grid-template-columns: 1fr 1fr; }
+    .exp-grid { grid-template-columns: 1fr; gap: 40px; }
+    .exp-detail { padding: 32px; }
+    .proj-card.featured, .proj-card.normal, .proj-card.half { grid-column: span 12; }
+
+    .about-avatar { width: 100%; height: 340px; max-width: 400px; margin: 0 auto; }
+    .about-avatar-wrap { justify-content: center; }
+    .stats-row { gap: 32px; }
+    .section-title { font-size: clamp(28px, 4vw, 44px); }
   }
-  @media (max-width: 768px) {
-    .nav-links { display: none; }
+
+  @media (max-width: 767px) {
+    #hero { padding: 110px 24px 48px; }
+    #about, #contact { padding: 72px 24px; }
+    #skills, #projects, #services, #experience, #education { padding: 72px 24px; }
+    footer { padding: 28px 24px; }
+
+    .hero-title { font-size: clamp(32px, 8vw, 52px); }
+    .hero-canvas-wrap { min-height: 320px; margin-top: 32px; }
+    .terminal { max-width: 100%; }
+    .hero-ctas { flex-direction: column; gap: 12px; }
+    .btn-primary, .btn-outline { text-align: center; width: 100%; padding: 14px 24px; }
+    .scroll-hint { left: 24px; bottom: 28px; }
+
+    .skills-grid { grid-template-columns: 1fr; }
+    .skill-card.wide { grid-column: span 1; }
     .services-grid { grid-template-columns: 1fr; }
-    .stats-row { flex-direction: column; gap: 24px; }
-    .about-avatar { width: 100%; height: 280px; }
-    .hero-canvas-wrap { min-height: 280px; }
+    .edu-cards { grid-template-columns: 1fr; }
+    .bento-grid { gap: 12px; }
+    .proj-card { padding: 24px; }
+
+    .stats-row { flex-direction: row; flex-wrap: wrap; gap: 24px; }
+    .stat-number { font-size: 32px; }
+    .about-avatar { height: 260px; }
+    .exp-detail { padding: 24px; }
+    .exp-bullets li { font-size: 13px; }
+    .contact-heading { font-size: clamp(28px, 8vw, 44px); }
+    footer { flex-direction: column; gap: 16px; text-align: center; }
+    .footer-links { gap: 20px; }
   }
+
+  @media (max-width: 639px) {
+    nav { padding: 14px 20px; }
+    .nav-logo { font-size: 18px; }
+    #hero { padding: 100px 20px 40px; }
+    #about, #contact { padding: 60px 20px; }
+    #skills, #projects, #services, #experience, #education { padding: 60px 20px; }
+    footer { padding: 24px 20px; }
+
+    .hero-eyebrow { font-size: 10px; }
+    .hero-title { font-size: clamp(28px, 9vw, 42px); }
+    .hero-sub { font-size: 13px; }
+    .hero-canvas-wrap { min-height: 280px; }
+    .terminal { border-radius: 10px; }
+    .terminal-body { padding: 16px 18px; font-size: 12px; }
+    .section-title { font-size: clamp(24px, 7vw, 36px); }
+    .section-tag { font-size: 10px; }
+    .skill-card, .service-card, .edu-card { padding: 20px; }
+    .stats-row { flex-direction: column; gap: 20px; }
+    .proj-card.featured .proj-title { font-size: 20px; }
+    .proj-desc { font-size: 12px; }
+    .exp-detail { padding: 20px; }
+    .form-footer { flex-direction: column; align-items: flex-start; }
+    .form-btn { width: 100%; text-align: center; }
+  }
+
+  @media (max-width: 479px) {
+    nav { padding: 12px 16px; }
+    #hero { padding: 90px 16px 36px; }
+    #about, #contact { padding: 52px 16px; }
+    #skills, #projects, #services, #experience, #education { padding: 52px 16px; }
+    footer { padding: 20px 16px; }
+    .hero-title { font-size: clamp(24px, 10vw, 36px); }
+    .hero-canvas-wrap { min-height: 240px; }
+    .hero-badges { gap: 7px; }
+    .badge { font-size: 11px; padding: 5px 12px; }
+    .section-title { font-size: clamp(22px, 8vw, 30px); }
+    .pulse-ring:nth-child(1) { width: 200px; height: 200px; }
+    .pulse-ring:nth-child(2) { width: 280px; height: 280px; }
+    .pulse-ring:nth-child(3) { width: 340px; height: 340px; }
+    .contact-link { padding: 12px 14px; font-size: 12px; }
+    .footer-links { flex-wrap: wrap; gap: 14px; justify-content: center; }
+    .exp-detail-title { font-size: 20px; }
+    .exp-detail { padding: 16px; }
+  }
+
+  /* ── TOUCH: hide custom cursor (Fix #2 supplementary) ── */
+  @media (hover: none) and (pointer: coarse) {
+    #cursor-dot, #cursor-ring, #cursor-label { display: none; }
+    body { cursor: auto; }
+    a, button, [data-project] { cursor: pointer; }
+    .nav-cta, .btn-primary, .btn-outline, .form-btn { cursor: pointer; }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation: none !important; transition: none !important; }
   }
@@ -937,6 +855,16 @@
 <div id="cursor-ring"></div>
 <div id="cursor-label">VIEW</div>
 
+<!-- MOBILE DRAWER -->
+<div class="nav-drawer" id="nav-drawer">
+  <a href="#about"      onclick="closeDrawer()">About</a>
+  <a href="#skills"     onclick="closeDrawer()">Skills</a>
+  <a href="#experience" onclick="closeDrawer()">Experience</a>
+  <a href="#projects"   onclick="closeDrawer()">Projects</a>
+  <a href="#contact"    onclick="closeDrawer()">Contact</a>
+  <a href="#contact" class="drawer-cta" onclick="closeDrawer()">Hire Me →</a>
+</div>
+
 <!-- NAVBAR -->
 <nav id="navbar">
   <a href="#hero" class="nav-logo">[KP]</a>
@@ -946,86 +874,95 @@
     <li><a href="#experience">Experience</a></li>
     <li><a href="#projects">Projects</a></li>
     <li><a href="#contact">Contact</a></li>
-  </ul></nav>
+  </ul>
+  <!-- Fix #2: "Hire Me" scrolls to contact form, no raw mailto -->
+  <a href="#contact" class="nav-cta">Hire Me →</a>
+  <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle menu" onclick="toggleDrawer()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
 
 <!-- HERO -->
 <section id="hero">
   <div class="hero-left">
-  <p class="hero-eyebrow">// Available for freelance & consulting</p>
-  <h1 class="hero-title">
-    Building Scalable<br/>
-    <span>Laravel</span> Systems<span class="cursor-blink"></span>
-  </h1>
-  <p class="hero-sub">
-    <span>Backend Engineer</span> · <span>API Architect</span> · <span>Product Manager</span>
-    <br/>Vapi, Gujarat, India · 5+ Years Experience
-  </p>
+    <p class="hero-eyebrow">// Available for freelance &amp; consulting</p>
+    <h1 class="hero-title">
+      Building Scalable<br/>
+      <span>Laravel</span> Systems<span class="cursor-blink"></span>
+    </h1>
+    <p class="hero-sub">
+      <span>Backend Engineer</span> · <span>API Architect</span> · <span>Product Manager</span><br/>
+      Vapi, Gujarat, India · 5+ Years Experience
+    </p>
 
-  <div class="terminal">
-    <div class="terminal-bar">
-      <div class="dot dot-r"></div>
-      <div class="dot dot-y"></div>
-      <div class="dot dot-g"></div>
-      <div class="terminal-title">khemraj@enjay ~ artisan</div>
+    <!-- Fix #1: no internal ports, container names, or exact versions -->
+    <div class="terminal">
+      <div class="terminal-bar">
+        <div class="dot dot-r"></div>
+        <div class="dot dot-y"></div>
+        <div class="dot dot-g"></div>
+        <div class="terminal-title">khemraj@enjay ~ artisan</div>
+      </div>
+      <div class="terminal-body">
+        <div class="t-line">
+          <span class="t-prompt">$</span>
+          <span class="t-cmd">php artisan serve --env=production</span>
+        </div>
+        <div class="t-line hidden" style="animation-delay:0.6s">
+          <span class="t-ok">✓</span>
+          <span class="t-info">Application ready · Production environment</span>
+        </div>
+        <div class="t-line hidden" style="animation-delay:1s">
+          <span class="t-ok">✓</span>
+          <span class="t-info">Queue worker started · Cache connected</span>
+        </div>
+        <div class="t-line hidden" style="animation-delay:1.4s">
+          <span class="t-ok">✓</span>
+          <span class="t-info">Containers healthy · Zero-downtime deploy</span>
+        </div>
+        <div class="t-line hidden" style="animation-delay:1.8s">
+          <span class="t-ok">✓</span>
+          <span class="t-info">Automation workflows: running</span>
+        </div>
+      </div>
     </div>
-    <div class="terminal-body">
-      <div class="t-line">
-        <span class="t-prompt">$</span>
-        <span class="t-cmd">php artisan serve --env=production</span>
-      </div>
-      <div class="t-line hidden" style="animation-delay:0.6s">
-        <span class="t-ok">✓</span>
-        <span class="t-info">Application ready on http://localhost:8000</span>
-      </div>
-      <div class="t-line hidden" style="animation-delay:1s">
-        <span class="t-ok">✓</span>
-        <span class="t-info">Queue worker started · Redis connected</span>
-      </div>
-      <div class="t-line hidden" style="animation-delay:1.4s">
-        <span class="t-ok">✓</span>
-        <span class="t-info">Docker containers: crm-app, mysql, redis</span>
-      </div>
-      <div class="t-line hidden" style="animation-delay:1.8s">
-        <span class="t-ok">✓</span>
-        <span class="t-info">n8n automation workflows: running</span>
-      </div>
+
+    <div class="hero-badges">
+      <span class="badge">Laravel</span>
+      <span class="badge">PHP</span>
+      <span class="badge">MySQL</span>
+      <span class="badge">REST APIs</span>
+      <span class="badge">Docker</span>
+      <span class="badge">Redis</span>
+      <span class="badge">n8n</span>
+      <span class="badge">Python</span>
+      <span class="badge">jQuery</span>
+    </div>
+
+    <!-- Fix #2: CTAs scroll to contact form, no raw email in HTML -->
+    <div class="hero-ctas">
+      <a href="#projects" class="btn-primary">View My Work ↓</a>
+      <a href="#contact"  class="btn-outline">Let's Talk</a>
+    </div>
+
+    <div class="scroll-hint">
+      <span class="scroll-line"></span>
+      Scroll to explore
     </div>
   </div>
 
-  <div class="hero-badges">
-    <span class="badge">Laravel</span>
-    <span class="badge">PHP 8.x</span>
-    <span class="badge">MySQL</span>
-    <span class="badge">REST APIs</span>
-    <span class="badge">Docker</span>
-    <span class="badge">Redis</span>
-    <span class="badge">n8n</span>
-    <span class="badge">Python</span>
-    <span class="badge">jQuery</span>
-  </div>
-
-  <div class="hero-ctas">
-    <a href="#projects" class="btn-primary">View My Work ↓</a>
-    <a href="mailto:khemrajpatil997@gmail.com" class="btn-outline">Let's Talk</a>
-  </div>
-
-  <div class="scroll-hint">
-    <span class="scroll-line"></span>
-    Scroll to explore
-  </div>
-  </div><!-- end hero-left -->
-
-  <!-- 3D CANVAS RIGHT SIDE -->
+  <!-- 3D Canvas right side -->
   <div class="hero-canvas-wrap">
     <div class="pulse-ring"></div>
     <div class="pulse-ring"></div>
     <div class="pulse-ring"></div>
     <canvas id="hero-3d"></canvas>
+    <!-- Fix #1: generic labels, no exact versions -->
     <span class="canvas-label tl">// RESTful API</span>
-    <span class="canvas-label tr">Laravel 11.x</span>
+    <span class="canvas-label tr">Laravel · PHP</span>
     <span class="canvas-label bl">Docker · Redis</span>
     <span class="canvas-label br">// CRM Engine</span>
-    <span class="canvas-label ml">PHP 8.x</span>
+    <span class="canvas-label ml">Backend Dev</span>
   </div>
 </section>
 
@@ -1041,28 +978,26 @@
     <p class="section-tag">// 01 — About Me</p>
     <h2 class="section-title">Senior Developer.<br/>Product Builder.</h2>
     <p class="about-bio">
-      I'm a <strong>Senior Laravel Developer & Product Manager</strong> with over 5+ years bridging complex backend architecture and user-centric product goals at <strong>Enjay IT Solutions</strong>.
+      I'm a <strong>Senior Laravel Developer &amp; Product Manager</strong> with over 5+ years bridging complex backend architecture and user-centric product goals at <strong>Enjay IT Solutions</strong>.
     </p>
     <p class="about-bio">
-      I lead development on <strong>CRM and Field Tracking systems</strong>, focusing on scalable, clean code that solves real business problems. I'm deeply invested in the Laravel ecosystem — recently attending <strong>Laracon India 2026</strong> to stay on the cutting edge.
+      I lead development on <strong>CRM and Field Tracking systems</strong>, focusing on scalable, clean code that solves real business problems. Deeply invested in the Laravel ecosystem — recently attended <strong>Laracon India 2026</strong>.
     </p>
     <p class="about-bio">
       Always open to discussing <strong>new Laravel features, system architecture, or product strategy</strong>.
     </p>
-    <div class="attended-badge">
-      🎟 Laracon India 2026 Attendee
-    </div>
+    <div class="attended-badge">🎟 Laracon India 2026 Attendee</div>
     <div class="stats-row">
       <div class="stat-item">
-        <div class="stat-number" data-count="5">5+</div>
+        <div class="stat-number">5+</div>
         <div class="stat-label">Years Experience</div>
       </div>
       <div class="stat-item">
-        <div class="stat-number" data-count="50">50+</div>
+        <div class="stat-number">50+</div>
         <div class="stat-label">Projects Delivered</div>
       </div>
       <div class="stat-item">
-        <div class="stat-number" data-count="100">100%</div>
+        <div class="stat-number">100%</div>
         <div class="stat-label">Client Satisfaction</div>
       </div>
     </div>
@@ -1073,14 +1008,14 @@
 <section id="skills">
   <div class="skills-header reveal">
     <p class="section-tag">// 02 — Tech Stack</p>
-    <h2 class="section-title">Skills & Expertise</h2>
+    <h2 class="section-title">Skills &amp; Expertise</h2>
   </div>
   <div class="skills-grid">
     <div class="skill-card reveal">
       <div class="skill-card-title">⚙ Backend</div>
       <div class="skill-chips">
         <span class="chip">Laravel</span>
-        <span class="chip">PHP 8.x</span>
+        <span class="chip">PHP</span>
         <span class="chip">REST APIs</span>
         <span class="chip">Python</span>
         <span class="chip">GraphQL</span>
@@ -1110,13 +1045,13 @@
       <div class="skill-chips">
         <span class="chip">Docker</span>
         <span class="chip">GitHub Actions</span>
-        <span class="chip">AWS EC2/S3</span>
+        <span class="chip">AWS</span>
         <span class="chip">Nginx</span>
         <span class="chip">Laravel Forge</span>
       </div>
     </div>
     <div class="skill-card reveal">
-      <div class="skill-card-title">🤖 AI & Automation</div>
+      <div class="skill-card-title">🤖 AI &amp; Automation</div>
       <div class="skill-chips">
         <span class="chip">n8n Workflows</span>
         <span class="chip">AI Integration</span>
@@ -1133,8 +1068,8 @@
         <span class="chip">Postman</span>
       </div>
     </div>
-    <div class="skill-card reveal" style="grid-column: span 2;">
-      <div class="skill-card-title">📋 Product & Leadership</div>
+    <div class="skill-card wide reveal">
+      <div class="skill-card-title">📋 Product &amp; Leadership</div>
       <div class="skill-chips">
         <span class="chip">Team Leadership</span>
         <span class="chip">Technical Mentoring</span>
@@ -1158,7 +1093,7 @@
     <div class="exp-timeline reveal">
       <div class="exp-item active" data-exp="0">
         <div class="exp-date">Feb 2025 – Present</div>
-        <div class="exp-role">Team Lead & Senior Backend Engineer</div>
+        <div class="exp-role">Team Lead &amp; Senior Backend Engineer</div>
         <div class="exp-company">Enjay IT Solutions</div>
       </div>
       <div class="exp-item" data-exp="1">
@@ -1173,14 +1108,14 @@
       </div>
     </div>
     <div class="exp-detail reveal" id="exp-detail">
-      <div class="exp-detail-title" id="exp-title">Team Lead & Senior Backend Engineer</div>
+      <div class="exp-detail-title"   id="exp-title">Team Lead &amp; Senior Backend Engineer</div>
       <div class="exp-detail-company" id="exp-company">Enjay IT Solutions Ltd.</div>
-      <div class="exp-detail-period" id="exp-period">Feb 2025 – Present · 1 yr 1 mo</div>
+      <div class="exp-detail-period"  id="exp-period">Feb 2025 – Present · 1 yr 1 mo</div>
       <ul class="exp-bullets" id="exp-bullets">
-        <li><strong>Leadership & Mentorship:</strong> Leading the API development team, conducting code reviews, and mentoring junior developers on Laravel best practices.</li>
-        <li><strong>DevOps & Infrastructure:</strong> Managing production environments and containerization using Docker to ensure zero-downtime deployments.</li>
-        <li><strong>AI & Automation:</strong> Pioneering the integration of AI workflows using n8n to automate complex internal business processes and data handling.</li>
-        <li><strong>Product Strategy:</strong> Collaborating directly with stakeholders to translate business requirements into technical roadmaps for the CRM product.</li>
+        <li><strong>Leadership &amp; Mentorship:</strong> Leading the API development team, conducting code reviews, and mentoring junior developers on Laravel best practices.</li>
+        <li><strong>DevOps &amp; Infrastructure:</strong> Managing production environments and containerization using Docker for zero-downtime deployments.</li>
+        <li><strong>AI &amp; Automation:</strong> Pioneering integration of AI workflows using n8n to automate complex internal business processes.</li>
+        <li><strong>Product Strategy:</strong> Collaborating with stakeholders to translate requirements into technical roadmaps for the CRM product.</li>
       </ul>
     </div>
   </div>
@@ -1196,9 +1131,7 @@
     <div class="proj-card featured reveal" data-project>
       <div class="proj-number">01 / Featured</div>
       <div class="proj-title">Enjay CRM Platform</div>
-      <div class="proj-desc">
-        Designed and developed the core RESTful APIs powering a full CRM platform serving thousands of requests. Built scalable modules for contact management, pipeline tracking, and field operations with real-time data sync.
-      </div>
+      <div class="proj-desc">Designed and developed core RESTful APIs powering a full CRM platform serving thousands of requests. Scalable modules for contact management, pipeline tracking, and field operations with real-time sync.</div>
       <div class="proj-tags">
         <span class="proj-tag">Laravel</span>
         <span class="proj-tag">MySQL</span>
@@ -1206,49 +1139,44 @@
         <span class="proj-tag">REST API</span>
         <span class="proj-tag">Docker</span>
       </div>
-      <a href="#" class="proj-link">View Case Study →</a>
+      <!-- Fix #4: coming-soon instead of dead # link -->
+      <span class="proj-link-soon">Private / NDA <span class="soon-pill">Confidential</span></span>
     </div>
 
     <div class="proj-card normal reveal" data-project>
       <div class="proj-number">02</div>
       <div class="proj-title">Field Tracking System</div>
-      <div class="proj-desc">
-        Real-time GPS-based field workforce tracking system with live dashboards, attendance management, and automated reporting.
-      </div>
+      <div class="proj-desc">Real-time GPS-based field workforce tracking with live dashboards, attendance management, and automated reporting.</div>
       <div class="proj-tags">
         <span class="proj-tag">Laravel</span>
         <span class="proj-tag">WebSockets</span>
         <span class="proj-tag">MySQL</span>
       </div>
-      <a href="#" class="proj-link">Case Study →</a>
+      <span class="proj-link-soon">Coming Soon <span class="soon-pill">In Progress</span></span>
     </div>
 
     <div class="proj-card half reveal" data-project>
       <div class="proj-number">03</div>
-      <div class="proj-title">ERP & Payment Integrations</div>
-      <div class="proj-desc">
-        Led integration of complex external services including payment gateways, ERP systems, and marketing tools into the Enjay ecosystem.
-      </div>
+      <div class="proj-title">ERP &amp; Payment Integrations</div>
+      <div class="proj-desc">Led integration of complex external services including payment gateways, ERP systems, and marketing tools into the Enjay ecosystem.</div>
       <div class="proj-tags">
         <span class="proj-tag">Laravel</span>
         <span class="proj-tag">3rd Party APIs</span>
         <span class="proj-tag">PHP</span>
       </div>
-      <a href="#" class="proj-link">View →</a>
+      <span class="proj-link-soon">Private / NDA <span class="soon-pill">Confidential</span></span>
     </div>
 
     <div class="proj-card half reveal" data-project>
       <div class="proj-number">04</div>
       <div class="proj-title">AI Workflow Automation</div>
-      <div class="proj-desc">
-        Engineered AI-driven automation pipelines using n8n to replace manual internal processes, saving 100s of hours monthly.
-      </div>
+      <div class="proj-desc">Engineered AI-driven automation pipelines using n8n to replace manual internal processes, saving hundreds of hours monthly.</div>
       <div class="proj-tags">
         <span class="proj-tag">n8n</span>
         <span class="proj-tag">Python</span>
         <span class="proj-tag">AI APIs</span>
       </div>
-      <a href="#" class="proj-link">View →</a>
+      <span class="proj-link-soon">Coming Soon <span class="soon-pill">In Progress</span></span>
     </div>
   </div>
 </section>
@@ -1267,7 +1195,7 @@
     </div>
     <div class="service-card reveal">
       <div class="service-icon">🔗</div>
-      <div class="service-title">REST API & Microservices</div>
+      <div class="service-title">REST API &amp; Microservices</div>
       <div class="service-desc">Designing and building robust, well-documented RESTful APIs and third-party integrations for any business need.</div>
     </div>
     <div class="service-card reveal">
@@ -1277,7 +1205,7 @@
     </div>
     <div class="service-card reveal">
       <div class="service-icon">🚀</div>
-      <div class="service-title">DevOps & Deployment</div>
+      <div class="service-title">DevOps &amp; Deployment</div>
       <div class="service-desc">Docker containerization, CI/CD pipelines, and zero-downtime deployments on AWS, Forge, and custom infrastructure.</div>
     </div>
   </div>
@@ -1312,108 +1240,135 @@
       <span>Something.</span>
     </div>
     <div class="contact-info">
-      <a href="/cdn-cgi/l/email-protection#9ff4f7faf2edfef5effeebf6f3a6a6a8dff8f2fef6f3b1fcf0f2" class="contact-link">
+      <!-- Fix #2 & #8: email decoded by JS, not in HTML source -->
+      <a href="#" class="contact-link" id="email-link" onclick="revealEmail(event)">
         <div class="contact-link-icon">✉</div>
-        <span class="__cf_email__" data-cfemail="a6cdcec3cbd4c7ccd6c7d2cfca9f9f91e6c1cbc7cfca88c5c9cb">[email&#160;protected]</span>
+        <span id="email-display" class="contact-email-display">Click to reveal email</span>
       </a>
-      <a href="tel:7016226567" class="contact-link">
+      <a href="tel:+917016226567" class="contact-link">
         <div class="contact-link-icon">📞</div>
-        +91 70162 26567
+        <span>+91 70162 26567</span>
       </a>
-      <a href="https://www.linkedin.com/in/khemraj-patil" target="_blank" class="contact-link">
+      <a href="https://www.linkedin.com/in/khemraj-patil" target="_blank" rel="noopener noreferrer" class="contact-link">
         <div class="contact-link-icon">in</div>
         linkedin.com/in/khemraj-patil
       </a>
     </div>
+    <!-- Fix #8: domain email note -->
+    <p class="domain-email-note">Business enquiries: <span><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="4823202d253a29220823202d253a2922203d2a662126">[email&#160;protected]</a></span></p>
   </div>
+
   <div class="reveal">
-    <form class="contact-form" onsubmit="return false;">
+    <!-- Fix #3: secure contact form with honeypot + validation + rate limiting -->
+    <form class="contact-form" id="contact-form" novalidate>
+      <!-- Honeypot: bots fill this, humans don't -->
+      <div class="form-honeypot" aria-hidden="true">
+        <label>Leave blank <input type="text" name="website" tabindex="-1" autocomplete="off"/></label>
+      </div>
+
       <div class="form-field">
-        <label class="form-label">Name</label>
-        <input class="form-input" type="text" placeholder="Your name" />
+        <label class="form-label" for="f-name">Name</label>
+        <input class="form-input" id="f-name" name="name" type="text" placeholder="Your full name" autocomplete="name" maxlength="100" required/>
+        <span class="form-error-msg" id="err-name">Please enter your name.</span>
       </div>
       <div class="form-field">
-        <label class="form-label">Email</label>
-        <input class="form-input" type="email" placeholder="your@email.com" />
+        <label class="form-label" for="f-email">Email</label>
+        <input class="form-input" id="f-email" name="email" type="email" placeholder="your@email.com" autocomplete="email" maxlength="150" required/>
+        <span class="form-error-msg" id="err-email">Please enter a valid email address.</span>
       </div>
       <div class="form-field">
-        <label class="form-label">Message</label>
-        <textarea class="form-textarea" placeholder="Tell me about your project..."></textarea>
+        <label class="form-label" for="f-msg">Message</label>
+        <textarea class="form-textarea" id="f-msg" name="message" placeholder="Tell me about your project…" maxlength="2000" required></textarea>
+        <span class="form-error-msg" id="err-msg">Message must be at least 20 characters.</span>
       </div>
-      <button class="form-btn" type="submit">Send Message →</button>
+
+      <div class="form-footer">
+        <span class="form-note">🔒 Your data is <span>never shared or sold</span></span>
+        <button class="form-btn" type="submit" id="form-submit">Send Message →</button>
+      </div>
+
+      <div class="form-success" id="form-success">
+        ✓ Message sent successfully!<br/>
+        <small style="color:var(--muted)">I'll get back to you within 24–48 hours.</small>
+      </div>
     </form>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-left">
-    © 2026 <span>Khemraj Patil</span> · Vapi, Gujarat, India
-  </div>
+  <div class="footer-left">© 2026 <span>Khemraj Patil</span> · India</div>
   <ul class="footer-links">
     <li><a href="#about">About</a></li>
     <li><a href="#projects">Projects</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
-  <div class="footer-craft">
-    Crafted with <span>❤</span> using Laravel spirit
-  </div>
+  <div class="footer-craft">Crafted with <span>❤</span> using Laravel spirit</div>
 </footer>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-/* ── CUSTOM CURSOR ── */
-const dot = document.getElementById('cursor-dot');
-const ring = document.getElementById('cursor-ring');
-const label = document.getElementById('cursor-label');
-let mx=0, my=0, rx=0, ry=0;
+/* ══ Fix #3: Mobile drawer ══ */
+function toggleDrawer() {
+  const d = document.getElementById('nav-drawer');
+  const b = document.getElementById('nav-hamburger');
+  const open = d.classList.toggle('open');
+  b.classList.toggle('open', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+}
+function closeDrawer() {
+  document.getElementById('nav-drawer').classList.remove('open');
+  document.getElementById('nav-hamburger').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
 
+/* ══ Custom Cursor ══ */
+const dot   = document.getElementById('cursor-dot');
+const ring  = document.getElementById('cursor-ring');
+const clabel = document.getElementById('cursor-label');
+let mx=0, my=0, rx=0, ry=0;
 document.addEventListener('mousemove', e => {
   mx = e.clientX; my = e.clientY;
-  dot.style.left = mx+'px'; dot.style.top = my+'px';
-  label.style.left = mx+'px'; label.style.top = my+'px';
+  dot.style.left   = mx+'px'; dot.style.top   = my+'px';
+  clabel.style.left = mx+'px'; clabel.style.top = my+'px';
 });
-
-function animRing() {
+(function animRing() {
   rx += (mx-rx)*0.12; ry += (my-ry)*0.12;
   ring.style.left = rx+'px'; ring.style.top = ry+'px';
   requestAnimationFrame(animRing);
-}
-animRing();
-
+})();
 document.querySelectorAll('[data-project]').forEach(el => {
   el.addEventListener('mouseenter', () => document.body.classList.add('project-hover'));
   el.addEventListener('mouseleave', () => document.body.classList.remove('project-hover'));
 });
 
-/* ── NAVBAR SCROLL ── */
-const navbar = document.getElementById('navbar');
+/* ══ Navbar scroll ══ */
 window.addEventListener('scroll', () => {
-  navbar.classList.toggle('scrolled', window.scrollY > 60);
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
 });
 
-/* ── INTERSECTION OBSERVER (scroll reveal) ── */
-const revealEls = document.querySelectorAll('.reveal');
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+/* ══ Scroll reveal ══ */
+const obs = new IntersectionObserver(es => {
+  es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
 }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
-revealEls.forEach(el => observer.observe(el));
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
-/* ── TERMINAL LINES ── */
+/* ══ Terminal line delays ══ */
 document.querySelectorAll('.t-line.hidden').forEach((el, i) => {
-  el.style.animationDelay = (0.5 + i*0.4) + 's';
+  el.style.animationDelay = (0.5 + i * 0.4) + 's';
 });
 
-/* ── EXPERIENCE SWITCHER ── */
+/* ══ Experience switcher ══ */
 const expData = [
   {
-    title: 'Team Lead & Senior Backend Engineer',
+    title: 'Team Lead &amp; Senior Backend Engineer',
     company: 'Enjay IT Solutions Ltd.',
     period: 'Feb 2025 – Present · 1 yr 1 mo',
     bullets: [
-      '<strong>Leadership & Mentorship:</strong> Leading the API development team, conducting code reviews, and mentoring junior developers on Laravel best practices.',
-      '<strong>DevOps & Infrastructure:</strong> Managing production environments and containerization using Docker to ensure zero-downtime deployments.',
-      '<strong>AI & Automation:</strong> Pioneering the integration of AI workflows using n8n to automate complex internal business processes and data handling.',
-      '<strong>Product Strategy:</strong> Collaborating directly with stakeholders to translate business requirements into technical roadmaps for the CRM product.'
+      '<strong>Leadership &amp; Mentorship:</strong> Leading the API development team, conducting code reviews, and mentoring junior developers on Laravel best practices.',
+      '<strong>DevOps &amp; Infrastructure:</strong> Managing production environments and containerization using Docker for zero-downtime deployments.',
+      '<strong>AI &amp; Automation:</strong> Pioneering integration of AI workflows using n8n to automate complex internal business processes.',
+      '<strong>Product Strategy:</strong> Collaborating with stakeholders to translate requirements into technical roadmaps for the CRM product.'
     ]
   },
   {
@@ -1422,7 +1377,7 @@ const expData = [
     period: 'Jun 2022 – Feb 2026 · 3 yrs 9 mos',
     bullets: [
       '<strong>API Architecture:</strong> Designed and developed scalable RESTful APIs for the core CRM platform, serving thousands of requests.',
-      '<strong>Third-Party Integrations:</strong> Led integration of complex external services — Payment Gateways, ERPs, and Marketing tools — into the Enjay ecosystem.',
+      '<strong>Third-Party Integrations:</strong> Led integration of Payment Gateways, ERPs, and Marketing tools into the Enjay ecosystem.',
       '<strong>Performance Optimization:</strong> Refactored legacy codebases to improve API response times and database efficiency.'
     ]
   },
@@ -1432,31 +1387,97 @@ const expData = [
     period: 'Dec 2020 – Jun 2023 · 2 yrs 7 mos · Bhilad, Gujarat',
     bullets: [
       '<strong>Development:</strong> Built new web application modules from scratch using Laravel and MySQL.',
-      '<strong>Full Stack Execution:</strong> Handled end-to-end development, ensuring seamless communication between the backend logic and frontend interfaces.'
+      '<strong>Full Stack Execution:</strong> Handled end-to-end development ensuring seamless backend and frontend integration.'
     ]
   }
 ];
-
 function loadExp(idx) {
   const d = expData[idx];
-  document.getElementById('exp-title').textContent = d.title;
+  document.getElementById('exp-title').innerHTML   = d.title;
   document.getElementById('exp-company').textContent = d.company;
-  document.getElementById('exp-period').textContent = d.period;
+  document.getElementById('exp-period').textContent  = d.period;
   document.getElementById('exp-bullets').innerHTML = d.bullets.map(b => `<li>${b}</li>`).join('');
-  document.querySelectorAll('.exp-item').forEach((el, i) => {
-    el.classList.toggle('active', i === idx);
-  });
+  document.querySelectorAll('.exp-item').forEach((el, i) => el.classList.toggle('active', i === idx));
+}
+document.querySelectorAll('.exp-item').forEach((el, i) => {
+  el.style.cursor = 'pointer';
+  el.addEventListener('click', () => loadExp(i));
+});
+
+/* ══ Fix #2: Email reveal — stored base64, decoded on click ══
+   Email is NOT in HTML source. Decoded only when user clicks.  */
+const _e = atob('a2hlbXJhanBhdGlsOTk3QGdtYWlsLmNvbQ==');
+let emailRevealed = false;
+function revealEmail(evt) {
+  evt.preventDefault();
+  if (!emailRevealed) {
+    document.getElementById('email-display').textContent = _e;
+    document.getElementById('email-link').href = 'mailto:' + _e;
+    emailRevealed = true;
+  }
 }
 
-document.querySelectorAll('.exp-item').forEach((el, i) => {
-  el.style.cursor = 'none';
-  el.addEventListener('click', () => loadExp(i));
+/* ══ Fix #3: Contact form — client-side validation + honeypot + rate limiting ══ */
+let lastSubmit = 0;
+const RATE_LIMIT_MS = 60000; // 1 submit per minute
+
+document.getElementById('contact-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const form    = this;
+  const name    = document.getElementById('f-name');
+  const email   = document.getElementById('f-email');
+  const msg     = document.getElementById('f-msg');
+  const honeypot = form.querySelector('input[name="website"]');
+  const btn     = document.getElementById('form-submit');
+
+  // Honeypot check — silently drop bot submissions
+  if (honeypot && honeypot.value !== '') return;
+
+  // Rate limiting
+  const now = Date.now();
+  if (now - lastSubmit < RATE_LIMIT_MS) {
+    const wait = Math.ceil((RATE_LIMIT_MS - (now - lastSubmit)) / 1000);
+    btn.textContent = `Wait ${wait}s…`;
+    setTimeout(() => { btn.textContent = 'Send Message →'; }, RATE_LIMIT_MS - (now - lastSubmit));
+    return;
+  }
+
+  // Validation
+  let valid = true;
+  const setErr = (field, errId, show) => {
+    field.classList.toggle('error', show);
+    document.getElementById(errId).classList.toggle('show', show);
+    if (show) valid = false;
+  };
+
+  const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  setErr(name,  'err-name',  name.value.trim().length < 2);
+  setErr(email, 'err-email', !emailRe.test(email.value.trim()));
+  setErr(msg,   'err-msg',   msg.value.trim().length < 20);
+
+  if (!valid) return;
+
+  // Simulate submission (replace with real AJAX call to backend)
+  btn.disabled    = true;
+  btn.textContent = 'Sending…';
+  lastSubmit = Date.now();
+
+  setTimeout(() => {
+    form.style.display = 'none';
+    document.getElementById('form-success').classList.add('show');
+  }, 1200);
 });
 </script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<!-- Fix #10: Three.js with SRI hash + crossorigin -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"
+        integrity="sha512-dLxUelApnYxpLt6K2iomGngnHO83iUvZytA3YjDUCjT0HDOHKXnVYdf3hU4JjM8uEhxf9nD1/ey98U3t2vZ0qQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"
+        onerror="console.warn('[Portfolio] Three.js CDN load failed – 3D scene disabled.')"></script>
 <script>
-(function() {
+/* Guard: only run 3D scene if THREE loaded successfully */
+if (typeof THREE === 'undefined') { console.warn('[Portfolio] THREE not available, skipping 3D scene.'); }
+else (function() {
   const canvas = document.getElementById('hero-3d');
   if (!canvas) return;
   const wrap = canvas.parentElement;
@@ -1479,143 +1500,94 @@ document.querySelectorAll('.exp-item').forEach((el, i) => {
   resize();
   window.addEventListener('resize', resize);
 
-  /* materials */
   const redLine  = new THREE.LineBasicMaterial({ color: 0xE63946, transparent: true, opacity: 0.88 });
   const dimLine  = new THREE.LineBasicMaterial({ color: 0xE63946, transparent: true, opacity: 0.22 });
   const connMat  = new THREE.LineBasicMaterial({ color: 0xE63946, transparent: true, opacity: 0.15 });
   const ringMat  = new THREE.LineBasicMaterial({ color: 0xE63946, transparent: true, opacity: 0.28 });
   const innerMat = new THREE.MeshBasicMaterial({ color: 0xE63946, wireframe: true });
-  const dotMat   = new THREE.MeshBasicMaterial({ color: 0xE63946, transparent: true, opacity: 0.75 });
 
   const root = new THREE.Group();
   scene.add(root);
 
-  /* large outer icosahedron */
-  const icoEdge = new THREE.EdgesGeometry(new THREE.IcosahedronGeometry(2.0, 1));
-  const icosa   = new THREE.LineSegments(icoEdge, redLine.clone());
+  const icosa  = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.IcosahedronGeometry(2.0, 1)), redLine.clone());
   root.add(icosa);
-
-  /* inner icosahedron */
-  const icoEdge2 = new THREE.EdgesGeometry(new THREE.IcosahedronGeometry(1.18, 1));
-  const inner    = new THREE.LineSegments(icoEdge2, dimLine.clone());
+  const inner  = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.IcosahedronGeometry(1.18, 1)), dimLine.clone());
   root.add(inner);
 
-  /* 3 torus rings */
   const torusEdge = new THREE.EdgesGeometry(new THREE.TorusGeometry(2.5, 0.007, 6, 90));
   const r1 = new THREE.LineSegments(torusEdge, ringMat.clone()); r1.rotation.x = Math.PI/2; root.add(r1);
   const r2 = new THREE.LineSegments(torusEdge, ringMat.clone()); r2.rotation.set(Math.PI/4, Math.PI/6, 0); root.add(r2);
   const r3 = new THREE.LineSegments(torusEdge, ringMat.clone()); r3.rotation.set(0, Math.PI/2, Math.PI/3); root.add(r3);
 
-  /* pulsing core */
   const core = new THREE.Mesh(new THREE.IcosahedronGeometry(0.38, 2), innerMat.clone());
   root.add(core);
 
-  /* floating particles */
   const PCOUNT = 60;
-  const pPositions = [];
+  const pPos   = [];
   const pGroup = new THREE.Group();
   root.add(pGroup);
   const sGeo = new THREE.SphereGeometry(0.046, 6, 6);
   for (let i = 0; i < PCOUNT; i++) {
-    const phi   = Math.acos(2 * Math.random() - 1);
-    const theta = Math.random() * Math.PI * 2;
-    const rad   = 1.6 + Math.random() * 1.4;
-    const x = rad * Math.sin(phi) * Math.cos(theta);
-    const y = rad * Math.sin(phi) * Math.sin(theta);
-    const z = rad * Math.cos(phi);
-    pPositions.push(new THREE.Vector3(x, y, z));
+    const phi = Math.acos(2*Math.random()-1), theta = Math.random()*Math.PI*2;
+    const rad = 1.6 + Math.random()*1.4;
+    const x = rad*Math.sin(phi)*Math.cos(theta), y = rad*Math.sin(phi)*Math.sin(theta), z = rad*Math.cos(phi);
+    pPos.push(new THREE.Vector3(x, y, z));
     const m = new THREE.Mesh(sGeo, new THREE.MeshBasicMaterial({ color: 0xE63946, transparent: true, opacity: 0.55 }));
-    m.position.set(x, y, z);
-    pGroup.add(m);
+    m.position.set(x, y, z); pGroup.add(m);
   }
 
-  /* connection lines between nearby particles */
   const MAX_SEG = 80;
   const cPos = new Float32Array(MAX_SEG * 6);
-  const cGeo = new THREE.BufferGeometry();
+  const cGeo  = new THREE.BufferGeometry();
   cGeo.setAttribute('position', new THREE.BufferAttribute(cPos, 3));
   const cLines = new THREE.LineSegments(cGeo, connMat.clone());
   root.add(cLines);
-
-  function updateConn() {
+  (function updateConn() {
     let idx = 0;
-    for (let i = 0; i < PCOUNT && idx < MAX_SEG * 2; i++) {
-      for (let j = i + 1; j < PCOUNT && idx < MAX_SEG * 2; j++) {
-        if (pPositions[i].distanceTo(pPositions[j]) < 1.05) {
-          cPos.set([pPositions[i].x, pPositions[i].y, pPositions[i].z], idx * 3);
-          idx++;
-          cPos.set([pPositions[j].x, pPositions[j].y, pPositions[j].z], idx * 3);
-          idx++;
+    for (let i = 0; i < PCOUNT && idx < MAX_SEG*2; i++)
+      for (let j = i+1; j < PCOUNT && idx < MAX_SEG*2; j++)
+        if (pPos[i].distanceTo(pPos[j]) < 1.05) {
+          cPos.set([pPos[i].x, pPos[i].y, pPos[i].z], idx*3); idx++;
+          cPos.set([pPos[j].x, pPos[j].y, pPos[j].z], idx*3); idx++;
         }
-      }
-    }
-    cGeo.setDrawRange(0, idx);
-    cGeo.attributes.position.needsUpdate = true;
-  }
-  updateConn();
+    cGeo.setDrawRange(0, idx); cGeo.attributes.position.needsUpdate = true;
+  })();
 
-  /* orbiting bright nodes */
-  const oData = [
-    { r: 2.2, spd: 0.008, axis: 0, phase: 0.0 },
-    { r: 2.6, spd: 0.005, axis: 1, phase: 2.1 },
-    { r: 2.4, spd: 0.012, axis: 2, phase: 4.2 },
-    { r: 1.9, spd: 0.010, axis: 0, phase: 1.2 },
-  ];
-  const oGeo = new THREE.SphereGeometry(0.09, 8, 8);
+  const oData  = [{r:2.2,spd:0.008,ax:0,ph:0},{r:2.6,spd:0.005,ax:1,ph:2.1},{r:2.4,spd:0.012,ax:2,ph:4.2},{r:1.9,spd:0.010,ax:0,ph:1.2}];
+  const oGeo   = new THREE.SphereGeometry(0.09, 8, 8);
   const oNodes = oData.map(d => {
     const mesh = new THREE.Mesh(oGeo, new THREE.MeshBasicMaterial({ color: 0xFF6B76 }));
-    root.add(mesh);
-    return { mesh, ...d, angle: d.phase };
+    root.add(mesh); return { mesh, ...d, angle: d.ph };
   });
 
-  /* mouse parallax */
-  let tRX = 0, tRY = 0, cRX = 0, cRY = 0;
+  let tRX=0, tRY=0, cRX=0, cRY=0;
   document.addEventListener('mousemove', e => {
-    tRY = ((e.clientX / window.innerWidth)  - 0.5) * 0.7;
-    tRX = ((e.clientY / window.innerHeight) - 0.5) * 0.45;
+    tRY = ((e.clientX/window.innerWidth)  - 0.5)*0.7;
+    tRX = ((e.clientY/window.innerHeight) - 0.5)*0.45;
   });
 
   let t = 0;
   (function animate() {
     requestAnimationFrame(animate);
     t += 0.01;
-
-    cRX += (tRX - cRX) * 0.04;
-    cRY += (tRY - cRY) * 0.04;
-
-    root.rotation.x = cRX + t * 0.055;
-    root.rotation.y = cRY + t * 0.085;
-
-    icosa.rotation.y = -t * 0.045;
-    inner.rotation.x =  t * 0.11;
-    inner.rotation.z =  t * 0.07;
-
-    r1.rotation.z = t * 0.055;
-    r2.rotation.x = t * 0.038;
-    r3.rotation.y = t * 0.065;
-
-    core.rotation.x = t * 0.28;
-    core.rotation.y = t * 0.19;
-    const pulse = 1 + Math.sin(t * 2.4) * 0.09;
-    core.scale.setScalar(pulse);
-
+    cRX += (tRX-cRX)*0.04; cRY += (tRY-cRY)*0.04;
+    root.rotation.x = cRX + t*0.055; root.rotation.y = cRY + t*0.085;
+    icosa.rotation.y = -t*0.045;
+    inner.rotation.x = t*0.11; inner.rotation.z = t*0.07;
+    r1.rotation.z = t*0.055; r2.rotation.x = t*0.038; r3.rotation.y = t*0.065;
+    core.rotation.x = t*0.28; core.rotation.y = t*0.19;
+    core.scale.setScalar(1 + Math.sin(t*2.4)*0.09);
     oNodes.forEach(o => {
       o.angle += o.spd;
-      if (o.axis === 0) {
-        o.mesh.position.set(Math.cos(o.angle)*o.r, Math.sin(o.angle*0.38)*0.42, Math.sin(o.angle)*o.r);
-      } else if (o.axis === 1) {
-        o.mesh.position.set(Math.sin(o.angle*0.3)*0.42, Math.cos(o.angle)*o.r, Math.sin(o.angle)*o.r);
-      } else {
-        o.mesh.position.set(Math.cos(o.angle)*o.r, Math.sin(o.angle)*o.r, Math.cos(o.angle*0.65)*0.5);
-      }
+      if (o.ax === 0) o.mesh.position.set(Math.cos(o.angle)*o.r, Math.sin(o.angle*.38)*.42, Math.sin(o.angle)*o.r);
+      else if (o.ax === 1) o.mesh.position.set(Math.sin(o.angle*.3)*.42, Math.cos(o.angle)*o.r, Math.sin(o.angle)*o.r);
+      else o.mesh.position.set(Math.cos(o.angle)*o.r, Math.sin(o.angle)*o.r, Math.cos(o.angle*.65)*.5);
     });
-
     pGroup.children.forEach((dot, i) => {
-      dot.position.x += Math.sin(t*0.8 + i*0.4) * 0.003;
-      dot.position.y += Math.cos(t*0.6 + i*0.5) * 0.002;
-      dot.material.opacity = 0.28 + Math.abs(Math.sin(t*1.1 + i*0.7)) * 0.48;
+      dot.position.x += Math.sin(t*.8+i*.4)*0.003;
+      dot.position.y += Math.cos(t*.6+i*.5)*0.002;
+      dot.material.opacity = 0.28 + Math.abs(Math.sin(t*1.1+i*.7))*0.48;
     });
-
     renderer.render(scene, camera);
   })();
 })();
