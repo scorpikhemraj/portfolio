@@ -140,11 +140,68 @@
   /* ── HERO ── */
   #hero {
     min-height: 100vh;
-    display: flex; flex-direction: column;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
     padding: 140px 60px 80px;
     position: relative;
     overflow: hidden;
+    gap: 40px;
+  }
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    z-index: 2;
+  }
+  .hero-canvas-wrap {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 540px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #hero-3d {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    inset: 0;
+    display: block;
+  }
+  /* floating labels around 3D scene */
+  .canvas-label {
+    position: absolute;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    pointer-events: none;
+    white-space: nowrap;
+    opacity: 0;
+    animation: floatIn 1s ease forwards;
+  }
+  .canvas-label.tl { top: 18%; left: 4%; animation-delay: 1.6s; }
+  .canvas-label.tr { top: 12%; right: 6%; animation-delay: 2s; }
+  .canvas-label.bl { bottom: 20%; left: 2%; animation-delay: 2.3s; }
+  .canvas-label.br { bottom: 14%; right: 4%; animation-delay: 1.9s; }
+  .canvas-label.ml { top: 50%; left: 0%; animation-delay: 2.5s; }
+  @keyframes floatIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+  /* pulsing ring behind canvas */
+  .pulse-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(230,57,70,0.12);
+    pointer-events: none;
+    animation: pulseRing 3s ease-in-out infinite;
+  }
+  .pulse-ring:nth-child(1) { width: 340px; height: 340px; animation-delay: 0s; }
+  .pulse-ring:nth-child(2) { width: 460px; height: 460px; animation-delay: 1s; }
+  .pulse-ring:nth-child(3) { width: 580px; height: 580px; animation-delay: 2s; }
+  @keyframes pulseRing {
+    0%,100% { opacity: 0.4; transform: scale(1); }
+    50% { opacity: 0.1; transform: scale(1.04); }
   }
   .hero-eyebrow {
     font-family: var(--font-mono);
@@ -851,6 +908,8 @@
   @media (max-width: 1024px) {
     nav { padding: 20px 32px; }
     #hero, #about, #contact, #skills, #projects, #services, #experience, #education { padding-left: 32px; padding-right: 32px; }
+    #hero { grid-template-columns: 1fr; }
+    .hero-canvas-wrap { min-height: 360px; }
     #about, #contact { grid-template-columns: 1fr; }
     .exp-grid { grid-template-columns: 1fr; }
     .services-grid { grid-template-columns: 1fr 1fr; }
@@ -864,6 +923,7 @@
     .services-grid { grid-template-columns: 1fr; }
     .stats-row { flex-direction: column; gap: 24px; }
     .about-avatar { width: 100%; height: 280px; }
+    .hero-canvas-wrap { min-height: 280px; }
   }
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation: none !important; transition: none !important; }
@@ -886,11 +946,11 @@
     <li><a href="#experience">Experience</a></li>
     <li><a href="#projects">Projects</a></li>
     <li><a href="#contact">Contact</a></li>
-  </ul>
-</nav>
+  </ul></nav>
 
 <!-- HERO -->
 <section id="hero">
+  <div class="hero-left">
   <p class="hero-eyebrow">// Available for freelance & consulting</p>
   <h1 class="hero-title">
     Building Scalable<br/>
@@ -952,6 +1012,20 @@
   <div class="scroll-hint">
     <span class="scroll-line"></span>
     Scroll to explore
+  </div>
+  </div><!-- end hero-left -->
+
+  <!-- 3D CANVAS RIGHT SIDE -->
+  <div class="hero-canvas-wrap">
+    <div class="pulse-ring"></div>
+    <div class="pulse-ring"></div>
+    <div class="pulse-ring"></div>
+    <canvas id="hero-3d"></canvas>
+    <span class="canvas-label tl">// RESTful API</span>
+    <span class="canvas-label tr">Laravel 11.x</span>
+    <span class="canvas-label bl">Docker · Redis</span>
+    <span class="canvas-label br">// CRM Engine</span>
+    <span class="canvas-label ml">PHP 8.x</span>
   </div>
 </section>
 
@@ -1238,9 +1312,9 @@
       <span>Something.</span>
     </div>
     <div class="contact-info">
-      <a href="mailto:khemrajpatil997@gmail.com" class="contact-link">
+      <a href="/cdn-cgi/l/email-protection#9ff4f7faf2edfef5effeebf6f3a6a6a8dff8f2fef6f3b1fcf0f2" class="contact-link">
         <div class="contact-link-icon">✉</div>
-        khemrajpatil997@gmail.com
+        <span class="__cf_email__" data-cfemail="a6cdcec3cbd4c7ccd6c7d2cfca9f9f91e6c1cbc7cfca88c5c9cb">[email&#160;protected]</span>
       </a>
       <a href="tel:7016226567" class="contact-link">
         <div class="contact-link-icon">📞</div>
@@ -1286,7 +1360,7 @@
   </div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 /* ── CUSTOM CURSOR ── */
 const dot = document.getElementById('cursor-dot');
 const ring = document.getElementById('cursor-ring');
@@ -1378,6 +1452,173 @@ document.querySelectorAll('.exp-item').forEach((el, i) => {
   el.style.cursor = 'none';
   el.addEventListener('click', () => loadExp(i));
 });
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function() {
+  const canvas = document.getElementById('hero-3d');
+  if (!canvas) return;
+  const wrap = canvas.parentElement;
+
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setClearColor(0x000000, 0);
+
+  const scene  = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(55, 1, 0.1, 100);
+  camera.position.set(0, 0, 5.5);
+
+  function resize() {
+    const w = wrap.offsetWidth  || 500;
+    const h = wrap.offsetHeight || 540;
+    renderer.setSize(w, h);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  /* materials */
+  const redLine  = new THREE.LineBasicMaterial({ color: 0xE63946, transparent: true, opacity: 0.88 });
+  const dimLine  = new THREE.LineBasicMaterial({ color: 0xE63946, transparent: true, opacity: 0.22 });
+  const connMat  = new THREE.LineBasicMaterial({ color: 0xE63946, transparent: true, opacity: 0.15 });
+  const ringMat  = new THREE.LineBasicMaterial({ color: 0xE63946, transparent: true, opacity: 0.28 });
+  const innerMat = new THREE.MeshBasicMaterial({ color: 0xE63946, wireframe: true });
+  const dotMat   = new THREE.MeshBasicMaterial({ color: 0xE63946, transparent: true, opacity: 0.75 });
+
+  const root = new THREE.Group();
+  scene.add(root);
+
+  /* large outer icosahedron */
+  const icoEdge = new THREE.EdgesGeometry(new THREE.IcosahedronGeometry(2.0, 1));
+  const icosa   = new THREE.LineSegments(icoEdge, redLine.clone());
+  root.add(icosa);
+
+  /* inner icosahedron */
+  const icoEdge2 = new THREE.EdgesGeometry(new THREE.IcosahedronGeometry(1.18, 1));
+  const inner    = new THREE.LineSegments(icoEdge2, dimLine.clone());
+  root.add(inner);
+
+  /* 3 torus rings */
+  const torusEdge = new THREE.EdgesGeometry(new THREE.TorusGeometry(2.5, 0.007, 6, 90));
+  const r1 = new THREE.LineSegments(torusEdge, ringMat.clone()); r1.rotation.x = Math.PI/2; root.add(r1);
+  const r2 = new THREE.LineSegments(torusEdge, ringMat.clone()); r2.rotation.set(Math.PI/4, Math.PI/6, 0); root.add(r2);
+  const r3 = new THREE.LineSegments(torusEdge, ringMat.clone()); r3.rotation.set(0, Math.PI/2, Math.PI/3); root.add(r3);
+
+  /* pulsing core */
+  const core = new THREE.Mesh(new THREE.IcosahedronGeometry(0.38, 2), innerMat.clone());
+  root.add(core);
+
+  /* floating particles */
+  const PCOUNT = 60;
+  const pPositions = [];
+  const pGroup = new THREE.Group();
+  root.add(pGroup);
+  const sGeo = new THREE.SphereGeometry(0.046, 6, 6);
+  for (let i = 0; i < PCOUNT; i++) {
+    const phi   = Math.acos(2 * Math.random() - 1);
+    const theta = Math.random() * Math.PI * 2;
+    const rad   = 1.6 + Math.random() * 1.4;
+    const x = rad * Math.sin(phi) * Math.cos(theta);
+    const y = rad * Math.sin(phi) * Math.sin(theta);
+    const z = rad * Math.cos(phi);
+    pPositions.push(new THREE.Vector3(x, y, z));
+    const m = new THREE.Mesh(sGeo, new THREE.MeshBasicMaterial({ color: 0xE63946, transparent: true, opacity: 0.55 }));
+    m.position.set(x, y, z);
+    pGroup.add(m);
+  }
+
+  /* connection lines between nearby particles */
+  const MAX_SEG = 80;
+  const cPos = new Float32Array(MAX_SEG * 6);
+  const cGeo = new THREE.BufferGeometry();
+  cGeo.setAttribute('position', new THREE.BufferAttribute(cPos, 3));
+  const cLines = new THREE.LineSegments(cGeo, connMat.clone());
+  root.add(cLines);
+
+  function updateConn() {
+    let idx = 0;
+    for (let i = 0; i < PCOUNT && idx < MAX_SEG * 2; i++) {
+      for (let j = i + 1; j < PCOUNT && idx < MAX_SEG * 2; j++) {
+        if (pPositions[i].distanceTo(pPositions[j]) < 1.05) {
+          cPos.set([pPositions[i].x, pPositions[i].y, pPositions[i].z], idx * 3);
+          idx++;
+          cPos.set([pPositions[j].x, pPositions[j].y, pPositions[j].z], idx * 3);
+          idx++;
+        }
+      }
+    }
+    cGeo.setDrawRange(0, idx);
+    cGeo.attributes.position.needsUpdate = true;
+  }
+  updateConn();
+
+  /* orbiting bright nodes */
+  const oData = [
+    { r: 2.2, spd: 0.008, axis: 0, phase: 0.0 },
+    { r: 2.6, spd: 0.005, axis: 1, phase: 2.1 },
+    { r: 2.4, spd: 0.012, axis: 2, phase: 4.2 },
+    { r: 1.9, spd: 0.010, axis: 0, phase: 1.2 },
+  ];
+  const oGeo = new THREE.SphereGeometry(0.09, 8, 8);
+  const oNodes = oData.map(d => {
+    const mesh = new THREE.Mesh(oGeo, new THREE.MeshBasicMaterial({ color: 0xFF6B76 }));
+    root.add(mesh);
+    return { mesh, ...d, angle: d.phase };
+  });
+
+  /* mouse parallax */
+  let tRX = 0, tRY = 0, cRX = 0, cRY = 0;
+  document.addEventListener('mousemove', e => {
+    tRY = ((e.clientX / window.innerWidth)  - 0.5) * 0.7;
+    tRX = ((e.clientY / window.innerHeight) - 0.5) * 0.45;
+  });
+
+  let t = 0;
+  (function animate() {
+    requestAnimationFrame(animate);
+    t += 0.01;
+
+    cRX += (tRX - cRX) * 0.04;
+    cRY += (tRY - cRY) * 0.04;
+
+    root.rotation.x = cRX + t * 0.055;
+    root.rotation.y = cRY + t * 0.085;
+
+    icosa.rotation.y = -t * 0.045;
+    inner.rotation.x =  t * 0.11;
+    inner.rotation.z =  t * 0.07;
+
+    r1.rotation.z = t * 0.055;
+    r2.rotation.x = t * 0.038;
+    r3.rotation.y = t * 0.065;
+
+    core.rotation.x = t * 0.28;
+    core.rotation.y = t * 0.19;
+    const pulse = 1 + Math.sin(t * 2.4) * 0.09;
+    core.scale.setScalar(pulse);
+
+    oNodes.forEach(o => {
+      o.angle += o.spd;
+      if (o.axis === 0) {
+        o.mesh.position.set(Math.cos(o.angle)*o.r, Math.sin(o.angle*0.38)*0.42, Math.sin(o.angle)*o.r);
+      } else if (o.axis === 1) {
+        o.mesh.position.set(Math.sin(o.angle*0.3)*0.42, Math.cos(o.angle)*o.r, Math.sin(o.angle)*o.r);
+      } else {
+        o.mesh.position.set(Math.cos(o.angle)*o.r, Math.sin(o.angle)*o.r, Math.cos(o.angle*0.65)*0.5);
+      }
+    });
+
+    pGroup.children.forEach((dot, i) => {
+      dot.position.x += Math.sin(t*0.8 + i*0.4) * 0.003;
+      dot.position.y += Math.cos(t*0.6 + i*0.5) * 0.002;
+      dot.material.opacity = 0.28 + Math.abs(Math.sin(t*1.1 + i*0.7)) * 0.48;
+    });
+
+    renderer.render(scene, camera);
+  })();
+})();
 </script>
 </body>
 </html>
