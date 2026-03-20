@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Moving from UUIDv4 to UUIDv7</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+  <!-- ══ SECURITY HEADERS — Fix #6 ══ -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self';
+           script-src  'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com;
+           style-src   'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com;
+           font-src    https://fonts.gstatic.com;
+           img-src     'self' data:;
+           connect-src 'self';
+           frame-ancestors 'none';" />
+  <!-- Fix #7: robots meta -->
+  <meta name="robots" content="index, follow, noarchive" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+
+<body>
+
+  <!-- Custom Cursor -->
+  <div id="cursor-dot"></div>
+  <div id="cursor-ring"></div>
+  <div id="cursor-label">VIEW</div>
+
+  <!-- MOBILE DRAWER -->
+  <div class="nav-drawer" id="nav-drawer">
+    <a href="../index.html#about" onclick="closeDrawer()">About</a>
+    <a href="../index.html#skills" onclick="closeDrawer()">Skills</a>
+    <a href="../index.html#experience" onclick="closeDrawer()">Experience</a>
+    <a href="../index.html#projects" onclick="closeDrawer()">Projects</a>
+    <a href="../blogs.html" onclick="closeDrawer()">Blogs</a>
+    <a href="../index.html#contact" class="drawer-cta" onclick="closeDrawer()">Contact →</a>
+  </div>
+
+  <!-- NAVBAR -->
+  <nav id="navbar">
+    <a href="../index.html#hero" class="nav-logo">[KP]</a>
+    <ul class="nav-links">
+      <li><a href="../index.html#about">About</a></li>
+      <li><a href="../index.html#skills">Skills</a></li>
+      <li><a href="../index.html#experience">Experience</a></li>
+      <li><a href="../index.html#projects">Projects</a></li>
+      <li><a href="../blogs.html" style="color: var(--text);">Blogs</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+    <!-- Fix #2: "Hire Me" scrolls to contact form, no raw mailto -->
+    <a href="../index.html#contact" class="nav-cta">Hire Me →</a>
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle menu" onclick="toggleDrawer()">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero" style="min-height: 40vh; padding-top: 180px; align-items: start; display: block; padding-bottom: 20px;">
+  <div class="hero-eyebrow"><a href="../blogs.html" style="color: var(--red); text-decoration: none; cursor: pointer;">← Back to Blogs</a></div>
+  <h1 class="hero-title" style="font-size: clamp(28px, 4vw, 56px); max-width: 900px;">Moving from UUIDv4 to <span>UUIDv7</span></h1>
+  <p class="hero-sub">Date: March 2026 &nbsp;&bull;&nbsp; Topic: Database / Performance</p>
+</section>
+
+<!-- POST CONTENT -->
+<section id="blog-content" style="padding: 40px 60px 120px; max-width: 860px; margin: 0 auto;">
+  <div style="font-family: var(--font-mono); font-size: 15px; color: var(--muted); line-height: 1.9; font-weight: 300;">
+    <p style="margin-bottom: 24px;">When building scalable applications, we often reach for UUIDs over auto-incrementing integers. UUIDv4 has been the standard choice for a long time, generating purely random identifiers. However, this randomness introduces a significant problem: database indexing inefficiency.</p>
+    
+    <h2 style="font-family: var(--font-display); color: var(--text); font-size: 24px; font-weight: 700; margin: 48px 0 24px;">The Problem with UUIDv4</h2>
+    <p style="margin-bottom: 24px;">Because UUIDv4 values are scattered and completely random, inserting them as primary keys in B-tree indexes (like MySQL's InnoDB uses) causes page splits and heavy disk fragmentation. This degrades write performance considerably as the table grows.</p>
+    
+    <h2 style="font-family: var(--font-display); color: var(--text); font-size: 24px; font-weight: 700; margin: 48px 0 24px;">Enter UUIDv7: Time-Sorted and Sequential</h2>
+    <p style="margin-bottom: 24px;">UUIDv7 natively incorporates a UNIX timestamp (to the millisecond) into the beginning of the identifier. The remainder is filled with random bytes. This means that UUIDv7s are naturally <strong>sortable by creation time</strong> and are inserted sequentially.</p>
+    
+    <ul class="exp-bullets" style="margin-bottom: 32px; padding-left: 0;">
+      <li><strong>Improved Insert Performance:</strong> Sequential inserts cause significantly less page fragmentation in B-tree indexed databases.</li>
+      <li><strong>Built-in Timestamp:</strong> Because the timestamp is embedded in the UUID itself, you can extract the creation time directly from the ID.</li>
+      <li><strong>No Need for `created_at`:</strong> By utilizing UUIDv7 in your application, you can logically drop the <code>created_at</code> column for certain high-volume tables, saving storage space while still maintaining chronologically sortable data.</li>
+    </ul>
+
+    <h2 style="font-family: var(--font-display); color: var(--text); font-size: 24px; font-weight: 700; margin: 48px 0 24px;">Implementing in Laravel</h2>
+    <p style="margin-bottom: 24px;">Laravel provides great native support for generating UUIDs. You can easily use Laravel's default model traits like <code>HasUuids</code> to start generating v7 identifiers seamlessly.</p>
+  </div>
+</section>
+<footer>
+    <div class="footer-left">© 2026 <span>Khemraj Patil</span> · India</div>
+    <ul class="footer-links">
+      <li><a href="../index.html#about">About</a></li>
+      <li><a href="../index.html#projects">Projects</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+    <div class="footer-craft">Crafted with <span>❤</span> using Laravel spirit</div>
+  </footer>
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+  <script src="../assets/js/main.js" defer></script>
+
+  </body>
+
+</html>
