@@ -12,9 +12,17 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="assets/css/style.css">
+<script>
+  (function () {
+    if (localStorage.getItem('theme') === 'light') {
+      document.documentElement.classList.add('light-mode');
+    }
+  })();
+</script>
 <style>
 /* ══ DESIGN TOKENS — matches khemrajhub.in ══ */
-:root{
+html:not(.light-mode){
   --red:#E63946; --red-glow:rgba(230,57,70,.22); --red-deep:#b02430;
   --bg:#08080E; --bg2:#0F0F18; --bg3:#13131F; --surface:#1A1A28;
   --border:rgba(255,255,255,.07); --border2:rgba(255,255,255,.12);
@@ -30,6 +38,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--fd);overflow-x:hid
 
 /* ── GRID TEXTURE (identical to portfolio) ── */
 body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0;}
+.light-mode body::before{background-image:linear-gradient(rgba(0,0,0,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,.03) 1px,transparent 1px);}
 
 /* ── READING PROGRESS ── */
 #prog{position:fixed;top:0;left:0;z-index:9999;height:2px;width:0;background:linear-gradient(90deg,var(--red),#ff8c94);transition:width .08s linear;}
@@ -45,6 +54,7 @@ body.card-hover #cr{width:60px;height:60px;border-color:var(--red);}
 /* ── NAV ── */
 nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:0 var(--sp);height:66px;transition:background .3s,border-color .3s;border-bottom:1px solid transparent;}
 nav.scrolled{background:rgba(8,8,14,.9);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-color:var(--border);}
+.light-mode nav.scrolled{background:rgba(255,255,255,.9);border-color:rgba(0,0,0,.08);}
 .nav-logo{font-family:var(--fm);font-size:clamp(16px,2vw,21px);font-weight:500;color:var(--red);text-decoration:none;letter-spacing:-.03em;flex-shrink:0;display:flex;align-items:center;gap:10px;}
 .nav-logo-back{font-size:11px;color:var(--muted);letter-spacing:.08em;transition:color .2s;}
 .nav-logo:hover .nav-logo-back{color:var(--red);}
@@ -391,6 +401,10 @@ footer{position:relative;z-index:1;background:var(--bg2);border-top:1px solid va
   </ul>
   <div class="nav-right">
     <button class="nav-search-btn" onclick="openSrch()">⌕ Search <kbd style="font-size:9px;opacity:.5;padding:1px 5px;border:1px solid var(--border2);border-radius:4px;margin-left:2px">⌘K</kbd></button>
+    <div class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme" style="margin-left: 15px; margin-right: 0;">
+      <span class="sun">☀️</span>
+      <span class="moon">🌙</span>
+    </div>
     <a href="#" class="nav-cta">Subscribe</a>
   </div>
   <button class="nav-hamburger" id="nh" aria-label="Menu" onclick="toggleD()">
@@ -534,6 +548,18 @@ footer{position:relative;z-index:1;background:var(--bg2);border-top:1px solid va
 </footer>
 
 <script>
+/* ══ THEME MANAGEMENT ══ */
+function initT() {
+  if (localStorage.getItem('theme') === 'light') {
+    document.documentElement.classList.add('light-mode');
+  }
+}
+function toggleTheme() {
+  const isL = document.documentElement.classList.toggle('light-mode');
+  localStorage.setItem('theme', isL ? 'light' : 'dark');
+}
+initT();
+
 /* ══ ARTICLES DATA ══ */
 const A=[
 {id:0,cat:'AI Safety',cc:'cs',ac:'art-s',

@@ -28,6 +28,13 @@
     href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap"
     rel="stylesheet" />
   <link rel="stylesheet" href="../assets/css/style.css">
+  <script>
+    (function () {
+      if (localStorage.getItem('theme') === 'light') {
+        document.documentElement.classList.add('light-mode');
+      }
+    })();
+  </script>
 </head>
 
 <body>
@@ -59,6 +66,10 @@
       <li><a href="../index.html#contact">Contact</a></li>
     </ul>
     <!-- Fix #2: "Hire Me" scrolls to contact form, no raw mailto -->
+    <div class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
+      <span class="sun">☀️</span>
+      <span class="moon">🌙</span>
+    </div>
     <a href="../index.html#contact" class="nav-cta">Hire Me →</a>
     <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle menu" onclick="toggleDrawer()">
       <span></span><span></span><span></span>

@@ -1,3 +1,15 @@
+/* ══ Theme Management ══ */
+function initTheme() {
+  if (localStorage.getItem('theme') === 'light') {
+    document.documentElement.classList.add('light-mode');
+  }
+}
+function toggleTheme() {
+  const isLight = document.documentElement.classList.toggle('light-mode');
+  localStorage.setItem('theme', isLight ? 'light' : 'dark');
+}
+initTheme();
+
 /* ══ Fix #3: Mobile drawer ══ */
     function toggleDrawer() {
       const d = document.getElementById('nav-drawer');

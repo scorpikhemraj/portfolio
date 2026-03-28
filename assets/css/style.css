@@ -13,6 +13,96 @@
       --subtle: #3A3850;
       --font-display: 'Syne', sans-serif;
       --font-mono: 'DM Mono', monospace;
+      --teal: #2EC4B6;
+      --teal-glow: rgba(46, 196, 182, 0.25);
+    }
+
+    .light-mode {
+      --bg: #FFFFFF;
+      --bg2: #F8F8FB;
+      --bg3: #F0F0F8;
+      --surface: #FFFFFF;
+      --border: rgba(0, 0, 0, 0.08);
+      --text: #08080E;
+      --muted: #5A5870;
+      --subtle: #9A98B0;
+      --teal: #1B7A72;
+      --teal-glow: rgba(27, 122, 114, 0.2);
+    }
+
+    .light-mode nav.scrolled {
+      background: rgba(255, 255, 255, 0.85);
+      border-color: rgba(0, 0, 0, 0.05);
+    }
+
+    .light-mode body::before {
+      background-image:
+        linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+    }
+
+    .light-mode .theme-toggle {
+      border-color: rgba(0, 0, 0, 0.15);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    .light-mode .nav-links a:hover {
+      color: var(--text);
+    }
+
+    /* ── THEME TOGGLE ── */
+    .theme-toggle {
+      width: 40px;
+      height: 40px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      margin-right: 20px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      font-size: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .theme-toggle:hover {
+      border-color: var(--border-red);
+      transform: rotate(15deg) scale(1.1);
+    }
+
+    .theme-toggle .sun,
+    .theme-toggle .moon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .light-mode .theme-toggle .sun {
+      transform: translate(-50%, 30px);
+      opacity: 0;
+    }
+
+    .light-mode .theme-toggle .moon {
+      transform: translate(-50%, -50%);
+      opacity: 1;
+    }
+
+    :not(.light-mode) .theme-toggle .moon {
+      transform: translate(-50%, -30px);
+      opacity: 0;
+    }
+
+    :not(.light-mode) .theme-toggle .sun {
+      transform: translate(-50%, -50%);
+      opacity: 1;
     }
 
     *,
