@@ -10,6 +10,69 @@ function toggleTheme() {
 }
 initTheme();
 
+/* ── Project Details Data ── */
+const projects = [
+  {
+    title: 'Enjay CRM Platform',
+    cat: 'Technical Win: 60% Query Reduction',
+    body: 'Designed and developed core RESTful APIs for a multi-tenant CRM. <strong>Impact:</strong> Optimized N+1 queries using Eloquent eager loading and Redis caching, reducing average latency from 2.3s to 340ms. Scaled to handle 100M+ transactions monthly while maintaining 99.9% uptime for 2,000+ active users.',
+    tags: ['Laravel', 'MySQL', 'Redis', 'Docker'],
+    link: 'Private / NDA'
+  },
+  {
+    title: 'Field Tracking System',
+    cat: 'Technical Win: 1.8s to 200ms Load Time',
+    body: 'Real-time GPS-based field workforce tracking. <strong>Impact:</strong> Implemented WebSockets for live dashboard updates and Redis for high-frequency attendance data. Reduced initial page load from 1.8s to 200ms, enabling real-time monitoring of 500+ field agents simultaneously.',
+    tags: ['Laravel', 'WebSockets', 'Redis', 'MySQL'],
+    link: 'Live'
+  },
+  {
+    title: 'ERP & Payment Integrations',
+    cat: 'Technical Win: Zero-Failure Rate',
+    body: 'Led the integration of complex external services including Stripe, Tally ERP, and custom marketing tools. <strong>Impact:</strong> Developed a robust webhook handling system with exponential backoff retries, ensuring 100% data consistency across 50k+ monthly financial transactions.',
+    tags: ['Laravel', 'Stripe', 'ERP', 'Tally'],
+    link: 'Private / NDA'
+  },
+  {
+    title: 'AI Workflow Automation',
+    cat: 'Technical Win: 200+ Hours Saved Monthly',
+    body: 'Engineered AI-driven automation pipelines using n8n and OpenAI. <strong>Impact:</strong> Replaced manual data entry and classification processes with automated agents. Currently saving the internal operations team over 200 man-hours every month.',
+    tags: ['n8n', 'Python', 'AI APIs', 'OpenAI'],
+    link: 'Internal'
+  }
+];
+
+function openArt(idx) {
+  const p = projects[idx];
+  const mc = document.getElementById('modal-content');
+  if (!mc) return;
+  mc.innerHTML = `
+    <button class="modal-close" onclick="closeMod()">✕</button>
+    <div class="blog-tag">${p.cat}</div>
+    <h2>${p.title}</h2>
+    <div class="proj-meta">
+      ${p.tags.map(t => `<span class="badge" style="margin-right:8px">${t}</span>`).join('')}
+    </div>
+    <div class="abody">${p.body}</div>
+    <div class="modal-cta">
+      <a href="#contact" class="btn-primary btn-teal" onclick="closeMod()">Discuss This Project →</a>
+    </div>
+  `;
+  const m = document.getElementById('modal');
+  const mo = document.getElementById('modal-overlay');
+  if (m) m.classList.add('open');
+  if (mo) mo.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeMod() {
+  const m = document.getElementById('modal');
+  const mo = document.getElementById('modal-overlay');
+  if (m) m.classList.remove('open');
+  if (mo) mo.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
 /* ══ Fix #3: Mobile drawer ══ */
     function toggleDrawer() {
       const d = document.getElementById('nav-drawer');
@@ -120,53 +183,60 @@ initTheme();
       }
     }
 
-    /* ══ Fix #3: Contact form — client-side validation + honeypot + rate limiting ══ */
-    let lastSubmit = 0;
-    const RATE_LIMIT_MS = 60000; // 1 submit per minute
+    /* ══ Fix #3: Contact form ══ */
+    const contactForm = document.getElementById('contact-form');
+    if (contactForm) {
+      let lastSubmit = 0;
+      const RATE_LIMIT_MS = 60000;
+      contactForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        const form = this;
+        const name = document.getElementById('f-name');
+        const email = document.getElementById('f-email');
+        const msg = document.getElementById('f-msg');
+        const btn = document.getElementById('form-submit');
+        const honeypot = form.querySelector('input[name="website"]');
+        if (honeypot && honeypot.value !== '') return;
 
-    document.getElementById('contact-form').addEventListener('submit', function (e) {
-      e.preventDefault();
-      const form = this;
-      const name = document.getElementById('f-name');
-      const email = document.getElementById('f-email');
-      const msg = document.getElementById('f-msg');
-      const honeypot = form.querySelector('input[name="website"]');
-      const btn = document.getElementById('form-submit');
+        const now = Date.now();
+        if (now - lastSubmit < RATE_LIMIT_MS) {
+          const wait = Math.ceil((RATE_LIMIT_MS - (now - lastSubmit)) / 1000);
+          btn.textContent = `Wait ${wait}s…`;
+          setTimeout(() => { btn.textContent = 'Send Message →'; }, RATE_LIMIT_MS - (now - lastSubmit));
+          return;
+        }
 
-      // Honeypot check — silently drop bot submissions
-      if (honeypot && honeypot.value !== '') return;
+        let valid = true;
+        const setErr = (field, errId, show) => {
+          if (!field || !document.getElementById(errId)) return;
+          field.classList.toggle('error', show);
+          document.getElementById(errId).classList.toggle('show', show);
+          if (show) valid = false;
+        };
 
-      // Rate limiting
-      const now = Date.now();
-      if (now - lastSubmit < RATE_LIMIT_MS) {
-        const wait = Math.ceil((RATE_LIMIT_MS - (now - lastSubmit)) / 1000);
-        btn.textContent = `Wait ${wait}s…`;
-        setTimeout(() => { btn.textContent = 'Send Message →'; }, RATE_LIMIT_MS - (now - lastSubmit));
-        return;
+        const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        setErr(name, 'err-name', name.value.trim().length < 2);
+        setErr(email, 'err-email', !emailRe.test(email.value.trim()));
+        setErr(msg, 'err-msg', msg.value.trim().length < 20);
+
+        if (!valid) return;
+
+        btn.disabled = true;
+        btn.textContent = 'Sending…';
+        lastSubmit = Date.now();
+
+        setTimeout(() => {
+          form.style.display = 'none';
+          const success = document.getElementById('form-success');
+          if (success) success.classList.add('show');
+        }, 1200);
+      });
+    }
+
+    // Keyboard support for modal
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        closeMod();
+        closeDrawer();
       }
-
-      // Validation
-      let valid = true;
-      const setErr = (field, errId, show) => {
-        field.classList.toggle('error', show);
-        document.getElementById(errId).classList.toggle('show', show);
-        if (show) valid = false;
-      };
-
-      const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      setErr(name, 'err-name', name.value.trim().length < 2);
-      setErr(email, 'err-email', !emailRe.test(email.value.trim()));
-      setErr(msg, 'err-msg', msg.value.trim().length < 20);
-
-      if (!valid) return;
-
-      // Simulate submission (replace with real AJAX call to backend)
-      btn.disabled = true;
-      btn.textContent = 'Sending…';
-      lastSubmit = Date.now();
-
-      setTimeout(() => {
-        form.style.display = 'none';
-        document.getElementById('form-success').classList.add('show');
-      }, 1200);
     });
