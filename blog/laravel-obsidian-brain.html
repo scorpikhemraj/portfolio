@@ -4,10 +4,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Moving from UUIDv4 to UUIDv7</title>
+  <title>Laravel 13.x: Building a Second Brain with Obsidian</title>
   <link rel="icon" type="image/x-icon" href="/favicon.ico" />
 
-  <!-- ══ SECURITY HEADERS — Fix #6 ══ -->
+  <!-- ══ SECURITY HEADERS ══ -->
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
   <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
@@ -19,28 +19,27 @@
            img-src     'self' data:;
            connect-src 'self';
            frame-ancestors 'none';" />
-  <!-- Fix #7: robots meta -->
   <meta name="robots" content="index, follow, noarchive" />
-  <meta name="description" content="Discover the benefits of UUIDv7 in Laravel. Learn how time-sorted sequential identifiers improve database performance and eliminate the need for created_at columns." />
+  <meta name="description" content="Learn how to build a Second Brain for Laravel 13.x using Obsidian. Transform documentation into an interconnected knowledge web optimized for AI." />
   
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="article" />
-  <meta property="og:url" content="https://khemrajhub.in/blog/uuid7.html" />
-  <meta property="og:title" content="Moving from UUIDv4 to UUIDv7 — Khemraj Patil" />
-  <meta property="og:description" content="Performance improvements and sequential data storage without the need for a 'created_at' column in modern applications." />
+  <meta property="og:url" content="https://khemrajhub.in/blog/laravel-obsidian-brain.html" />
+  <meta property="og:title" content="Laravel 13.x: Building a Second Brain with Obsidian" />
+  <meta property="og:description" content="Transforming linear documentation into an interconnected knowledge web using Obsidian for the ultimate developer experience." />
   <meta property="og:image" content="https://khemrajhub.in/assets/img/og-preview.png" />
 
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image" />
-  <meta property="twitter:title" content="Moving from UUIDv4 to UUIDv7 — Khemraj Patil" />
-  <meta property="twitter:description" content="Performance improvements and sequential data storage using UUIDv7." />
+  <meta property="twitter:title" content="Laravel 13.x: Building a Second Brain with Obsidian" />
+  <meta property="twitter:description" content="Transforming linear documentation into an interconnected knowledge web using Obsidian." />
   <meta property="twitter:image" content="https://khemrajhub.in/assets/img/og-preview.png" />
 
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "headline": "Moving from UUIDv4 to UUIDv7",
+    "headline": "Laravel 13.x: Building a Second Brain with Obsidian",
     "image": "https://khemrajhub.in/assets/img/og-preview.png",
     "author": {
       "@type": "Person",
@@ -50,8 +49,8 @@
       "@type": "Person",
       "name": "Khemraj Patil"
     },
-    "datePublished": "2026-03-19",
-    "description": "Performance improvements and sequential data storage without the need for a 'created_at' column in modern applications."
+    "datePublished": "2026-05-05",
+    "description": "Transforming linear documentation into an interconnected knowledge web using Obsidian."
   }
   </script>
 
@@ -106,7 +105,6 @@
         </a>
       </li>
     </ul>
-    <!-- Fix #2: "Hire Me" scrolls to contact form, no raw mailto -->
     <div class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Theme">
       <span class="sun">☀️</span>
       <span class="moon">🌙</span>
@@ -119,33 +117,38 @@
 
   <!-- HERO -->
   <section id="hero" style="min-height: 40vh; padding-top: 180px; align-items: start; display: block; padding-bottom: 20px;">
-  <div class="hero-eyebrow"><a href="../blogs.html" style="color: var(--red); text-decoration: none; cursor: pointer;">← Back to Blogs</a></div>
-  <h1 class="hero-title" style="font-size: clamp(28px, 4vw, 56px); max-width: 900px;">Moving from UUIDv4 to <span>UUIDv7</span></h1>
-  <p class="hero-sub">Date: 19 March 2026 &nbsp;&bull;&nbsp; Topic: Database / Performance</p>
-</section>
+    <div class="hero-eyebrow"><a href="../blogs.html" style="color: var(--red); text-decoration: none; cursor: pointer;">← Back to Blogs</a></div>
+    <h1 class="hero-title" style="font-size: clamp(28px, 4vw, 56px); max-width: 900px;">Laravel 13.x: Building a <span>Second Brain</span> with Obsidian</h1>
+    <p class="hero-sub">Date: 5 May 2026 &nbsp;&bull;&nbsp; Topic: Productivity / Laravel</p>
+  </section>
 
-<!-- POST CONTENT -->
-<section id="blog-content" style="padding: 40px 60px 120px; max-width: 860px; margin: 0 auto;">
-  <div style="font-family: var(--font-mono); font-size: 15px; color: var(--muted); line-height: 1.9; font-weight: 300;">
-    <p style="margin-bottom: 24px;">When building scalable applications, we often reach for UUIDs over auto-incrementing integers. UUIDv4 has been the standard choice for a long time, generating purely random identifiers. However, this randomness introduces a significant problem: database indexing inefficiency.</p>
-    
-    <h2 style="font-family: var(--font-display); color: var(--text); font-size: 24px; font-weight: 700; margin: 48px 0 24px;">The Problem with UUIDv4</h2>
-    <p style="margin-bottom: 24px;">Because UUIDv4 values are scattered and completely random, inserting them as primary keys in B-tree indexes (like MySQL's InnoDB uses) causes page splits and heavy disk fragmentation. This degrades write performance considerably as the table grows.</p>
-    
-    <h2 style="font-family: var(--font-display); color: var(--text); font-size: 24px; font-weight: 700; margin: 48px 0 24px;">Enter UUIDv7: Time-Sorted and Sequential</h2>
-    <p style="margin-bottom: 24px;">UUIDv7 natively incorporates a UNIX timestamp (to the millisecond) into the beginning of the identifier. The remainder is filled with random bytes. This means that UUIDv7s are naturally <strong>sortable by creation time</strong> and are inserted sequentially.</p>
-    
-    <ul class="exp-bullets" style="margin-bottom: 32px; padding-left: 0;">
-      <li><strong>Improved Insert Performance:</strong> Sequential inserts cause significantly less page fragmentation in B-tree indexed databases.</li>
-      <li><strong>Built-in Timestamp:</strong> Because the timestamp is embedded in the UUID itself, you can extract the creation time directly from the ID.</li>
-      <li><strong>No Need for `created_at`:</strong> By utilizing UUIDv7 in your application, you can logically drop the <code>created_at</code> column for certain high-volume tables, saving storage space while still maintaining chronologically sortable data.</li>
-    </ul>
+  <!-- POST CONTENT -->
+  <section id="blog-content" style="padding: 40px 60px 120px; max-width: 860px; margin: 0 auto;">
+    <div style="font-family: var(--font-mono); font-size: 15px; color: var(--muted); line-height: 1.9; font-weight: 300;">
+      <p style="margin-bottom: 24px;">As developers, we are constantly bombarded with new information. Laravel 13.x is here, bringing with it a wealth of new features, from the AI SDK to advanced Eloquent patterns. Traditional documentation is excellent, but it's linear. Our brains, however, work through associations and networks. This is where the concept of a "Second Brain" comes in.</p>
 
-    <h2 style="font-family: var(--font-display); color: var(--text); font-size: 24px; font-weight: 700; margin: 48px 0 24px;">Implementing in Laravel</h2>
-    <p style="margin-bottom: 24px;">Laravel provides great native support for generating UUIDs. You can easily use Laravel's default model traits like <code>HasUuids</code> to start generating v7 identifiers seamlessly.</p>
-  </div>
-</section>
-<footer>
+      <h2 style="font-family: var(--font-display); color: var(--text); font-size: 24px; font-weight: 700; margin: 48px 0 24px;">The Obsidian Vault for Laravel 13.x</h2>
+      <p style="margin-bottom: 24px;">I've created a specialized Obsidian vault that transforms the entire Laravel 13.x documentation into an interconnected web of knowledge. Instead of just reading pages, you can now navigate through concepts using <code>[[wiki-links]]</code>, visualizing the relationships between different parts of the framework.</p>
+
+      <h2 style="font-family: var(--font-display); color: var(--text); font-size: 24px; font-weight: 700; margin: 48px 0 24px;">Why use this?</h2>
+      <ul class="exp-bullets" style="margin-bottom: 32px; padding-left: 0;">
+        <li><strong>Interconnected Knowledge:</strong> Navigate from Routing to Middleware to Controllers seamlessly.</li>
+        <li><strong>AI-Ready:</strong> Point GitHub Copilot or Cursor to this vault to provide it with deep, structured knowledge of Laravel 13.x.</li>
+        <li><strong>Visual Discovery:</strong> Use Obsidian's Graph View to see how different framework components interact.</li>
+        <li><strong>Expert Context:</strong> Includes architectural maps and expert notes that go beyond basic documentation.</li>
+      </ul>
+
+      <h2 style="font-family: var(--font-display); color: var(--text); font-size: 24px; font-weight: 700; margin: 48px 0 24px;">Context Engine for AI</h2>
+      <p style="margin-bottom: 24px;">In the age of AI-assisted development, the quality of your results depends on the quality of the context you provide. This vault serves as a high-quality RAG (Retrieval-Augmented Generation) source for your AI tools, ensuring they have the most accurate and interconnected information about the latest Laravel release.</p>
+
+      <div style="margin-top: 48px; padding: 24px; background: var(--bg2); border-left: 4px solid var(--red);">
+        <p style="margin-bottom: 0;">Check out the repository and start building your Laravel Second Brain today: <br>
+        <a href="https://github.com/scorpikhemraj/laravel-13.x-obsidian-second-brain" target="_blank" style="color: var(--red); text-decoration: none; font-weight: 600;">scorpikhemraj/laravel-13.x-obsidian-second-brain</a></p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
     <div class="footer-left">© 2026 <span>Khemraj Patil</span> · India</div>
     <ul class="footer-links">
       <li><a href="../index.html#about">About</a></li>
@@ -155,9 +158,8 @@
     <div class="footer-craft">Crafted with <span>❤</span> using Laravel spirit</div>
   </footer>
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
   <script src="../assets/js/main.js" defer></script>
 
-  </body>
+</body>
 
 </html>

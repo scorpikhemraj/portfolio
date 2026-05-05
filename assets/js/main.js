@@ -39,6 +39,13 @@ const projects = [
     body: 'Engineered AI-driven automation pipelines using n8n and OpenAI. <strong>Impact:</strong> Replaced manual data entry and classification processes with automated agents. Currently saving the internal operations team over 200 man-hours every month.',
     tags: ['n8n', 'Python', 'AI APIs', 'OpenAI'],
     link: 'Internal'
+  },
+  {
+    title: 'Laravel 13.x Second Brain',
+    cat: 'Technical Win: Interconnected Documentation',
+    body: 'Developed an Obsidian-based "Second Brain" vault for Laravel 13.x. <strong>Impact:</strong> Transformed 100+ pages of linear documentation into a semantic network with wiki-links and architectural maps. Optimized for AI Context (RAG), enabling tools like Cursor and Copilot to have deeper framework knowledge.',
+    tags: ['Laravel', 'Obsidian', 'Knowledge Graph', 'AI RAG'],
+    link: 'Open Source'
   }
 ];
 
@@ -60,31 +67,104 @@ function openArt(idx) {
   `;
   const m = document.getElementById('modal');
   const mo = document.getElementById('modal-overlay');
-  if (m) m.classList.add('open');
-  if (mo) mo.classList.add('open');
+  if (!m || !mo) return;
+
+  m.classList.add('open');
+  mo.classList.add('open');
   document.body.style.overflow = 'hidden';
+
+  anime({
+    targets: m,
+    opacity: [0, 1],
+    scale: [0.9, 1],
+    translateY: ['-55%', '-50%'],
+    duration: 600,
+    easing: 'easeOutExpo'
+  });
+
+  anime({
+    targets: mo,
+    opacity: [0, 1],
+    duration: 400,
+    easing: 'linear'
+  });
 }
 
 function closeMod() {
   const m = document.getElementById('modal');
   const mo = document.getElementById('modal-overlay');
-  if (m) m.classList.remove('open');
-  if (mo) mo.classList.remove('open');
-  document.body.style.overflow = '';
+  if (!m || !mo) return;
+
+  anime({
+    targets: m,
+    opacity: 0,
+    scale: 0.95,
+    translateY: '-45%',
+    duration: 300,
+    easing: 'easeInQuad',
+    complete: () => {
+      m.classList.remove('open');
+      mo.classList.remove('open');
+      document.body.style.overflow = '';
+      // reset transform for next open
+      m.style.transform = '';
+    }
+  });
+
+  anime({
+    targets: mo,
+    opacity: 0,
+    duration: 300,
+    easing: 'linear'
+  });
 }
 
 /* ══ Fix #3: Mobile drawer ══ */
     function toggleDrawer() {
       const d = document.getElementById('nav-drawer');
       const b = document.getElementById('nav-hamburger');
-      const open = d.classList.toggle('open');
-      b.classList.toggle('open', open);
-      document.body.style.overflow = open ? 'hidden' : '';
+      if (!d || !b) return;
+      const isOpen = d.classList.contains('open');
+
+      if (!isOpen) {
+        d.classList.add('open');
+        b.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        anime({
+          targets: d,
+          translateX: ['100%', '0%'],
+          duration: 500,
+          easing: 'easeOutExpo'
+        });
+        anime({
+          targets: '.nav-drawer a',
+          opacity: [0, 1],
+          translateX: [20, 0],
+          delay: anime.stagger(60, { start: 200 }),
+          duration: 600,
+          easing: 'easeOutExpo'
+        });
+      } else {
+        closeDrawer();
+      }
     }
+
     function closeDrawer() {
-      document.getElementById('nav-drawer').classList.remove('open');
-      document.getElementById('nav-hamburger').classList.remove('open');
-      document.body.style.overflow = '';
+      const d = document.getElementById('nav-drawer');
+      const b = document.getElementById('nav-hamburger');
+      if (!d || !b || !d.classList.contains('open')) return;
+
+      anime({
+        targets: d,
+        translateX: '100%',
+        duration: 400,
+        easing: 'easeInExpo',
+        complete: () => {
+          d.classList.remove('open');
+          b.classList.remove('open');
+          document.body.style.overflow = '';
+        }
+      });
     }
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
 
@@ -113,15 +193,218 @@ function closeMod() {
       document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
     });
 
-    /* ══ Scroll reveal ══ */
-    const obs = new IntersectionObserver(es => {
-      es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
-    }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
-    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+    /* ══ Scroll reveal (Anime.js) ══ */
+    // Helper to split text into spans for character animation
+    function splitText(selector) {
+      const elements = document.querySelectorAll(selector);
+      elements.forEach(el => {
+        const text = el.innerText;
+        el.innerHTML = '';
+        text.split('').forEach(char => {
+          const span = document.createElement('span');
+          span.style.display = 'inline-block';
+          span.style.whiteSpace = 'pre';
+          span.classList.add('anim-char');
+          span.innerText = char;
+          el.appendChild(span);
+        });
+      });
+    }
 
-    /* ══ Terminal line delays ══ */
-    document.querySelectorAll('.t-line.hidden').forEach((el, i) => {
-      el.style.animationDelay = (0.5 + i * 0.4) + 's';
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const title = entry.target.querySelector('.section-title');
+          if (title && !title.classList.contains('split-done')) {
+            title.classList.add('split-done');
+            // Split title into chars
+            const originalText = title.innerText;
+            title.innerHTML = '';
+            originalText.split('').forEach(char => {
+              const span = document.createElement('span');
+              span.style.display = 'inline-block';
+              span.style.whiteSpace = 'pre';
+              span.innerText = char;
+              title.appendChild(span);
+            });
+
+            anime({
+              targets: title.querySelectorAll('span'),
+              opacity: [0, 1],
+              translateY: [20, 0],
+              delay: anime.stagger(30),
+              duration: 800,
+              easing: 'easeOutExpo'
+            });
+          }
+
+          anime({
+            targets: entry.target,
+            opacity: [0, 1],
+            translateY: [30, 0],
+            duration: 1200,
+            easing: 'easeOutExpo'
+          });
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    /* ══ Hero Timeline ══ */
+    window.addEventListener('load', () => {
+      const cmdEl = document.querySelector('.t-cmd');
+      const cmdText = cmdEl ? cmdEl.textContent : '';
+      if (cmdEl) cmdEl.textContent = '';
+
+      const heroTL = anime.timeline({
+        easing: 'easeOutExpo',
+        duration: 1200
+      });
+
+      heroTL
+        .add({
+          targets: '.hero-title',
+          opacity: [0, 1],
+          translateY: [30, 0],
+          delay: 300
+        })
+        .add({
+          targets: '.hero-sub',
+          opacity: [0, 1],
+          translateY: [20, 0],
+        }, '-=1000')
+        .add({
+          targets: '.terminal',
+          opacity: [0, 1],
+          translateY: [20, 0],
+        }, '-=1000')
+        .add({
+          targets: { charCount: 0 },
+          charCount: cmdText.length,
+          duration: 1000,
+          easing: 'linear',
+          round: 1,
+          update: (anim) => {
+            if (cmdEl) cmdEl.textContent = cmdText.substring(0, anim.animations[0].currentValue);
+          }
+        }, '-=200')
+        .add({
+          targets: '.terminal .t-line.hidden',
+          opacity: [0, 1],
+          translateX: [-15, 0],
+          delay: anime.stagger(250),
+          duration: 800
+        }, '-=200')
+        .add({
+          targets: '.hero-badges .badge',
+          opacity: [0, 1],
+          scale: [0.8, 1],
+          delay: anime.stagger(60)
+        }, '-=800')
+        .add({
+          targets: '.hero-ctas, .scroll-hint',
+          opacity: [0, 1],
+          translateY: [15, 0],
+        }, '-=900');
+    });
+
+    /* ══ Skills Stagger ══ */
+    const skillsObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          anime({
+            targets: '.skill-card',
+            opacity: [0, 1],
+            translateY: [25, 0],
+            delay: anime.stagger(100),
+            duration: 1000,
+            easing: 'easeOutExpo'
+          });
+          anime({
+            targets: '.chip',
+            opacity: [0, 1],
+            scale: [0.8, 1],
+            delay: anime.stagger(40, { start: 400 }),
+            duration: 800,
+            easing: 'easeOutBack'
+          });
+          skillsObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    const skillsGrid = document.querySelector('.skills-grid');
+    if (skillsGrid) skillsObserver.observe(skillsGrid);
+
+    /* ══ Experience Stagger ══ */
+    const expObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          anime({
+            targets: '.exp-timeline, .exp-detail',
+            opacity: [0, 1],
+            translateY: [20, 0],
+            delay: anime.stagger(150),
+            duration: 1000,
+            easing: 'easeOutExpo'
+          });
+          expObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    const expGrid = document.querySelector('.exp-grid');
+    if (expGrid) expObserver.observe(expGrid);
+
+    /* ══ Stats Counter ══ */
+    const statsObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          document.querySelectorAll('.stat-item').forEach(item => {
+            const numEl = item.querySelector('.stat-number');
+            if (!numEl) return;
+            const finalVal = parseInt(numEl.innerText);
+            const suffix = numEl.innerText.replace(/[0-9]/g, '');
+            const obj = { value: 0 };
+            
+            anime({
+              targets: obj,
+              value: finalVal,
+              round: 1,
+              duration: 2500,
+              easing: 'easeOutExpo',
+              update: () => {
+                numEl.innerText = obj.value + suffix;
+              },
+              begin: () => { numEl.style.opacity = 1; }
+            });
+          });
+          statsObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    const statsRow = document.querySelector('.stats-row');
+    if (statsRow) statsObserver.observe(statsRow);
+
+    /* ══ Project Hover ══ */
+    document.querySelectorAll('[data-project]').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        anime({
+          targets: el,
+          translateY: -8,
+          scale: 1.01,
+          duration: 400,
+          easing: 'easeOutQuad'
+        });
+      });
+      el.addEventListener('mouseleave', () => {
+        anime({
+          targets: el,
+          translateY: 0,
+          scale: 1,
+          duration: 400,
+          easing: 'easeOutQuad'
+        });
+      });
     });
 
     /* ══ Experience switcher ══ */
@@ -240,3 +523,80 @@ function closeMod() {
         closeDrawer();
       }
     });
+
+    /* ══ Logo Micro-interactions ══ */
+    function initLogoAnim() {
+      const logo = document.querySelector('.nav-logo');
+      if (!logo) return;
+      const text = logo.innerText;
+      logo.innerHTML = '';
+      text.split('').forEach(char => {
+        const span = document.createElement('span');
+        span.innerText = char;
+        span.style.display = 'inline-block';
+        logo.appendChild(span);
+      });
+
+      logo.addEventListener('mouseenter', () => {
+        anime({
+          targets: '.nav-logo span',
+          translateY: [0, -5, 0],
+          scale: [1, 1.2, 1],
+          delay: anime.stagger(40),
+          duration: 500,
+          easing: 'easeOutElastic(1, .6)'
+        });
+      });
+    }
+    initLogoAnim();
+
+    /* ══ Hero Mesh Background ══ */
+    function initHeroMesh() {
+      const mesh = document.getElementById('hero-mesh');
+      if (!mesh) return;
+      const count = 15;
+      for (let i = 0; i < count; i++) {
+        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        const x1 = Math.random() * 1000;
+        const y1 = Math.random() * 1000;
+        const x2 = x1 + (Math.random() - 0.5) * 300;
+        const y2 = y1 + (Math.random() - 0.5) * 300;
+        
+        line.setAttribute('x1', x1);
+        line.setAttribute('y1', y1);
+        line.setAttribute('x2', x2);
+        line.setAttribute('y2', y2);
+        line.setAttribute('stroke', 'url(#mesh-grad)');
+        line.setAttribute('stroke-width', Math.random() * 2 + 1);
+        line.setAttribute('stroke-linecap', 'round');
+        line.setAttribute('opacity', Math.random() * 0.5 + 0.1);
+        mesh.appendChild(line);
+
+        // Animate drifting
+        anime({
+          targets: line,
+          x1: `+=${(Math.random() - 0.5) * 100}`,
+          y1: `+=${(Math.random() - 0.5) * 100}`,
+          x2: `+=${(Math.random() - 0.5) * 100}`,
+          y2: `+=${(Math.random() - 0.5) * 100}`,
+          duration: 10000 + Math.random() * 10000,
+          easing: 'easeInOutQuad',
+          direction: 'alternate',
+          loop: true
+        });
+      }
+
+      // Mouse interaction
+      document.addEventListener('mousemove', e => {
+        const x = (e.clientX / window.innerWidth) * 50;
+        const y = (e.clientY / window.innerHeight) * 50;
+        anime({
+          targets: '.hero-mesh line',
+          translateX: x,
+          translateY: y,
+          duration: 1000,
+          easing: 'easeOutQuad'
+        });
+      });
+    }
+    initHeroMesh();

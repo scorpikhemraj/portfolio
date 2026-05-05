@@ -21,6 +21,34 @@
            frame-ancestors 'none';" />
   <!-- Fix #7: robots meta -->
   <meta name="robots" content="index, follow, noarchive" />
+  <meta name="description" content="Technical insights on Laravel performance, system architecture, and building a second brain. Articles by Khemraj Patil." />
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://khemrajhub.in/blogs.html" />
+  <meta property="og:title" content="Blog — Khemraj Patil" />
+  <meta property="og:description" content="Insights on Laravel, Performance, Architecture, and Product Strategy." />
+  <meta property="og:image" content="https://khemrajhub.in/assets/img/og-preview.png" />
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:title" content="Blog — Khemraj Patil" />
+  <meta property="twitter:description" content="Insights on Laravel, Performance, Architecture, and Product Strategy." />
+  <meta property="twitter:image" content="https://khemrajhub.in/assets/img/og-preview.png" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "name": "Khemraj Patil's Blog",
+    "url": "https://khemrajhub.in/blogs.html",
+    "description": "Thoughts on Laravel, Performance, Architecture, and Product Strategy.",
+    "publisher": {
+      "@type": "Person",
+      "name": "Khemraj Patil"
+    }
+  }
+  </script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -94,7 +122,17 @@
 <!-- BLOG LIST -->
 <section id="blog-list" style="padding: 40px 60px 120px; background: var(--bg2);">
   <div class="bento-grid">
-    <a href="blog/uuid7.html" class="proj-card featured" style="text-decoration: none; display: block; cursor: pointer;">
+    <a href="blog/laravel-obsidian-brain.html" class="proj-card featured" style="text-decoration: none; display: block; cursor: pointer;">
+      <div class="proj-number" style="margin-bottom: 12px; font-size: 13px;">May 2026</div>
+      <h3 class="proj-title" style="color: var(--text);">Laravel 13.x: Building a Second Brain</h3>
+      <p class="proj-desc">Transforming linear documentation into an interconnected knowledge web using Obsidian for the ultimate developer experience.</p>
+      <div class="proj-tags">
+        <span class="proj-tag">Laravel</span>
+        <span class="proj-tag">Obsidian</span>
+        <span class="proj-tag">Productivity</span>
+      </div>
+    </a>
+    <a href="blog/uuid7.html" class="proj-card normal" style="text-decoration: none; display: block; cursor: pointer;">
       <div class="proj-number" style="margin-bottom: 12px; font-size: 13px;">Mar 2026</div>
       <h3 class="proj-title" style="color: var(--text);">Moving from UUIDv4 to UUIDv7</h3>
       <p class="proj-desc">Performance improvements and sequential data storage without the need for a 'created_at' column in modern applications.</p>

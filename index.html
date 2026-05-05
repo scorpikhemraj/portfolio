@@ -21,6 +21,22 @@
            frame-ancestors 'none';" />
   <!-- Fix #7: robots meta -->
   <meta name="robots" content="index, follow, noarchive" />
+  <meta name="description" content="Senior Laravel Developer & Product Manager with 5+ years of experience building scalable systems, RESTful APIs, and AI-driven automation." />
+  <meta name="keywords" content="Laravel, PHP, Backend Developer, API Architect, Product Manager, Docker, Redis, AI Automation, India" />
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://khemrajhub.in/" />
+  <meta property="og:title" content="Khemraj Patil — Senior Laravel Developer" />
+  <meta property="og:description" content="Building scalable systems and high-performance APIs. Senior Engineer and Team Lead with a passion for the Laravel ecosystem." />
+  <meta property="og:image" content="https://khemrajhub.in/assets/img/og-preview.png" />
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://khemrajhub.in/" />
+  <meta property="twitter:title" content="Khemraj Patil — Senior Laravel Developer" />
+  <meta property="twitter:description" content="Building scalable systems and high-performance APIs. Senior Engineer and Team Lead with a passion for the Laravel ecosystem." />
+  <meta property="twitter:image" content="https://khemrajhub.in/assets/img/og-preview.png" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -43,6 +59,20 @@
   <div id="cursor-dot"></div>
   <div id="cursor-ring"></div>
   <div id="cursor-label">VIEW</div>
+  
+  <!-- Narrative Layer (Architectural Request Flow) -->
+  <svg id="narrative-svg" class="narrative-layer" preserveAspectRatio="none">
+    <path id="narrative-path" d="" fill="none" stroke="var(--red)" stroke-width="2" stroke-dasharray="10,5" opacity="0.3" />
+    <circle id="narrative-packet" r="5" fill="var(--red)" filter="url(#glow)" />
+    <defs>
+      <filter id="glow">
+        <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+        <feMerge>
+          <feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/>
+        </feMerge>
+      </filter>
+    </defs>
+  </svg>
 
   <!-- MOBILE DRAWER -->
   <div class="nav-drawer" id="nav-drawer">
@@ -96,6 +126,15 @@
 
   <!-- HERO -->
   <section id="hero">
+    <!-- Background Mesh -->
+    <svg class="hero-mesh" id="hero-mesh" viewBox="0 0 1000 1000" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="mesh-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="var(--red)" stop-opacity="0.1" />
+          <stop offset="100%" stop-color="var(--teal)" stop-opacity="0.05" />
+        </linearGradient>
+      </defs>
+    </svg>
     <div class="hero-left">
       <div class="availability-badge">
         <div class="availability-dot"></div>
@@ -123,19 +162,19 @@
             <span class="t-prompt">$</span>
             <span class="t-cmd">php artisan serve --env=production</span>
           </div>
-          <div class="t-line hidden" style="animation-delay:0.6s">
+          <div class="t-line hidden">
             <span class="t-ok">✓</span>
             <span class="t-info">Application ready · Production environment</span>
           </div>
-          <div class="t-line hidden" style="animation-delay:1s">
+          <div class="t-line hidden">
             <span class="t-ok">✓</span>
             <span class="t-info">Queue worker started · Cache connected</span>
           </div>
-          <div class="t-line hidden" style="animation-delay:1.4s">
+          <div class="t-line hidden">
             <span class="t-ok">✓</span>
             <span class="t-info">Containers healthy · Zero-downtime deploy</span>
           </div>
-          <div class="t-line hidden" style="animation-delay:1.8s">
+          <div class="t-line hidden">
             <span class="t-ok">✓</span>
             <span class="t-info">Automation workflows: running</span>
           </div>
@@ -230,7 +269,7 @@
       <h2 class="section-title">Skills &amp; Expertise</h2>
     </div>
     <div class="skills-grid">
-      <div class="skill-card reveal">
+      <div class="skill-card">
         <div class="skill-card-title">⚙ Backend</div>
         <div class="skill-chips">
           <span class="chip">Laravel</span>
@@ -240,7 +279,7 @@
           <span class="chip">GraphQL</span>
         </div>
       </div>
-      <div class="skill-card reveal">
+      <div class="skill-card">
         <div class="skill-card-title">🗄 Database</div>
         <div class="skill-chips">
           <span class="chip">MySQL</span>
@@ -249,7 +288,7 @@
           <span class="chip">Eloquent ORM</span>
         </div>
       </div>
-      <div class="skill-card reveal">
+      <div class="skill-card">
         <div class="skill-card-title">🎨 Frontend</div>
         <div class="skill-chips">
           <span class="chip">jQuery</span>
@@ -259,7 +298,7 @@
           <span class="chip">Tailwind CSS</span>
         </div>
       </div>
-      <div class="skill-card reveal">
+      <div class="skill-card">
         <div class="skill-card-title">🚀 DevOps</div>
         <div class="skill-chips">
           <span class="chip">Docker</span>
@@ -269,7 +308,7 @@
           <span class="chip">Laravel Forge</span>
         </div>
       </div>
-      <div class="skill-card reveal">
+      <div class="skill-card">
         <div class="skill-card-title">🤖 AI &amp; Automation</div>
         <div class="skill-chips">
           <span class="chip">n8n Workflows</span>
@@ -277,7 +316,7 @@
           <span class="chip">Process Automation</span>
         </div>
       </div>
-      <div class="skill-card reveal">
+      <div class="skill-card">
         <div class="skill-card-title">🧰 Tools</div>
         <div class="skill-chips">
           <span class="chip">PHPUnit</span>
@@ -309,7 +348,7 @@
       <h2 class="section-title">Experience</h2>
     </div>
     <div class="exp-grid">
-      <div class="exp-timeline reveal">
+      <div class="exp-timeline">
         <div class="exp-item active" data-exp="0">
           <div class="exp-date">Feb 2025 – Present</div>
           <div class="exp-role">Team Lead &amp; Senior Backend Engineer</div>
@@ -326,7 +365,7 @@
           <div class="exp-company">Enjay Network Solutions</div>
         </div>
       </div>
-      <div class="exp-detail reveal" id="exp-detail">
+      <div class="exp-detail" id="exp-detail">
         <div class="exp-detail-title" id="exp-title">Team Lead &amp; Senior Backend Engineer</div>
         <div class="exp-detail-company" id="exp-company">Enjay IT Solutions Ltd.</div>
         <div class="exp-detail-period" id="exp-period">Feb 2025 – Present · 1 yr 1 mo</div>
@@ -418,6 +457,23 @@
         <div style="margin-top:20px;display:flex;align-items:center;justify-content:space-between">
           <span class="proj-link-soon" style="margin:0">Internal <span class="soon-pill">Deployed</span></span>
           <a href="#" class="proj-view-details" onclick="openArt(3);return false;"
+            style="color:var(--teal);text-decoration:none;font-size:12px;font-family:var(--font-mono);letter-spacing:.05em">View
+            Details →</a>
+        </div>
+      </div>
+
+      <div class="proj-card featured reveal" data-project>
+        <div class="proj-number">05 / New</div>
+        <div class="proj-title">Laravel 13.x Second Brain</div>
+        <div class="proj-desc">Obsidian-based knowledge graph for Laravel 13.x. <strong>Optimized for AI context (RAG)</strong> and semantic documentation navigation.</div>
+        <div class="proj-tags">
+          <span class="proj-tag">Laravel</span>
+          <span class="proj-tag">Obsidian</span>
+          <span class="proj-tag">AI Context</span>
+        </div>
+        <div style="margin-top:20px;display:flex;align-items:center;justify-content:space-between">
+          <a href="https://github.com/scorpikhemraj/laravel-13.x-obsidian-second-brain" target="_blank" class="proj-link-live" style="margin:0">GitHub <span class="soon-pill">Public</span></a>
+          <a href="#" class="proj-view-details" onclick="openArt(4);return false;"
             style="color:var(--teal);text-decoration:none;font-size:12px;font-family:var(--font-mono);letter-spacing:.05em">View
             Details →</a>
         </div>
@@ -576,6 +632,7 @@
   </div>
 
   <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
   <script src="assets/js/main.js" defer></script>
 
   <!-- Fix #10: Three.js with SRI hash + crossorigin -->
@@ -584,6 +641,7 @@
     crossorigin="anonymous" referrerpolicy="no-referrer"
     onerror="console.warn('[Portfolio] Three.js CDN load failed – 3D scene disabled.')"></script>
   <script src="assets/js/three-scene.js" defer></script>
+  <script src="assets/js/scroll-story.js" defer></script>
 
 </body>
 
