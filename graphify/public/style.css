@@ -1,0 +1,957 @@
+a {
+  text-decoration: none;
+}
+
+#auth {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#auth-info {
+  display: flex;
+  margin: 30px;
+  flex-direction: column;
+  align-items: center;
+  width: 400px;
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 35px;
+  background: -webkit-linear-gradient(top, #75ff8c, #2488ef);
+}
+
+#auth-info-img {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: white;
+  padding: 25px;
+}
+
+#auth-info-title {
+  font-size: 30px;
+  color: #fff;
+  line-height: 1.2;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+#auth-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.auth-form-input {
+  outline: none;
+  width: 21em;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  font-size: 16px;
+  color: white;
+  line-height: 1.2;
+  display: block;
+  height: 45px;
+  background: transparent;
+}
+
+.auth-form-input::placeholder {
+  color: white;
+}
+
+#auth-form-button {
+  outline: none;
+  margin: 30px;
+  width: 35%;
+  padding: 10px;
+  border-radius: 25px;
+  font-size: 1.3em;
+  transition: 0.4s;
+}
+
+#auth-form-button:hover {
+  color: white;
+  background: -webkit-linear-gradient(top, #75ff8c, #2488ef);
+}
+
+#auth-form-or {
+  margin: auto;
+  color: white;
+}
+
+#auth-form-google {
+  margin: 30px;
+  width: 50px;
+  height: 50px;
+}
+
+#auth-form-error {
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  background-image: linear-gradient(
+    45deg,
+    rgb(154, 54, 54) 40%,
+    rgb(255, 59, 0) 100%
+  );
+}
+button {
+  cursor: pointer;
+}
+body {
+  font-family: sans-serif;
+  margin-top: 0;
+  margin-left: 0;
+  background-color: #f9f4f7;
+  /* #efe9ec; */
+}
+
+.container p {
+  padding-top: 10px;
+  color: #666;
+}
+
+#copied-text {
+  width: 220px;
+  max-height: 310px;
+  resize: none;
+  overflow: hidden;
+}
+
+.csv-input {
+  left: 0px;
+  top: 0px;
+  position: absolute;
+  padding: 20px 70px;
+  z-index: -1;
+  cursor: pointer;
+}
+.react-csv-input {
+  opacity: 0;
+  cursor: pointer;
+}
+.dataset-link {
+  align-items: center;
+  display: flex;
+  cursor: pointer;
+}
+
+.dataset-link > div > div {
+  width: 40% !important;
+  border-radius: 10px;
+  border: 0px !important;
+  opacity: 0.8;
+  text-align: center;
+  background-image: linear-gradient(45deg, #f3fffa, #1d6142) !important;
+}
+
+.dataset-preview {
+  display: flex;
+  flex-direction: column;
+}
+
+.dataset-preview-link {
+  color: green;
+  margin: 2px;
+  cursor: pointer;
+}
+
+.dataset-preview-permalink {
+  margin: 1px;
+  color: lightseagreen;
+}
+
+.dataset-preview-detail {
+  margin: 2px;
+}
+
+.dataset-preview-link:hover {
+  color: orangered;
+  transition: 1s;
+}
+
+#graph-dataset {
+  margin: 50px;
+}
+
+#graph-dataset-table-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#graph-dataset-table-container-name {
+  border-bottom: double 3px rgb(42, 216, 127);
+}
+
+#graph-dataset-table-container-table {
+  width: 100%;
+}
+
+.graph-dataset-headers {
+  display: flex;
+  justify-content: space-around;
+  margin: 20px;
+}
+
+.graph-dataset-graphs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.graph-dataset-graphs-single {
+  cursor: pointer;
+  margin: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: inset 3px #617180;
+  border-radius: 5px;
+  transition: 0.3s ease-in-out;
+}
+
+.graph-dataset-single-container {
+  width: 33%;
+}
+
+.graph-dataset-graphs-single:hover {
+  text-shadow: 0px 0px 1.5px rgb(22, 239, 148);
+  box-shadow: 0px 0px 10px 0.4px rgb(19, 247, 100);
+  border: inset 3px #318f57;
+}
+
+#graph-dataset-select {
+  display: flex;
+  flex-direction: column;
+}
+
+#graph-dataset-select-name {
+  align-self: center;
+  border-bottom: double 3px rgb(42, 216, 127);
+}
+
+#graph-dataset-select-x-y {
+  width: fit-content;
+  box-shadow: 0px 0px 0px 1px rgb(19, 247, 131);
+  border: inset 1px #318f41;
+  padding: 10px 40px;
+  border-radius: 5px;
+}
+
+#graph-dataset-message {
+  height: fit-content;
+  width: fit-content;
+  box-shadow: 0px 0px 0px 1px rgb(19, 247, 131);
+  border: inset 1px #318f41;
+  padding: 25px 40px;
+  border-radius: 5px;
+}
+#graph-dataset-message h2 {
+  margin-top: 2em;
+  margin-bottom: 1.7em;
+}
+
+.graph-dataset-select-y {
+  display: flex;
+  align-items: center;
+}
+
+#graph-dataset-select-y-add {
+  align-self: center;
+  margin: 0px 15px;
+  font-size: 15px;
+  color: white;
+  border: inset 2px #318f68;
+  border-radius: 5px;
+  background-image: linear-gradient(
+    45deg,
+    rgb(10, 54, 34) 45%,
+    rgb(0, 255, 126) 105%
+  );
+  box-shadow: 0px 0px 0px 1px rgb(19, 247, 152);
+  transition: color 1s, background-image 1.5s;
+}
+
+#graph-dataset-select-y-add:hover {
+  color: #202b47;
+  background-image: linear-gradient(45deg, #ddffee, #49cc7e);
+}
+
+#graph-dataset-select-y-delete {
+  margin: 0px 20px 15px;
+  font-size: 15px;
+  color: white;
+  border: inset 2px #8f3131;
+  border-radius: 5px;
+  background-image: linear-gradient(
+    45deg,
+    rgb(109, 20, 20) 45%,
+    rgb(255, 0, 0) 105%
+  );
+  box-shadow: 0px 0px 0px 1px rgb(247, 19, 19);
+  transition: color 1s, background-image 1.5s;
+}
+
+#graph-dataset-select-y-delete:hover {
+  color: #000000;
+  background-image: linear-gradient(45deg, #ffdddd, #cc4949);
+}
+
+.graph-dataset-select-x-y-input {
+  height: 25px;
+  width: 300px;
+  margin: 0px 0px 15px;
+}
+#graph-link {
+  cursor: pointer;
+}
+
+.graph-thumbnail-image {
+  height: 200px;
+  max-width: 100%;
+  cursor: pointer;
+}
+.graph-thumbnail-image .graph-dataset-graphs-single {
+  color: black;
+  border: none;
+  box-shadow: none;
+}
+
+.graph-thumbnail-image .recharts-responsive-container {
+  height: 20vh !important;
+}
+
+.graph-thumbnail-image .recharts-wrapper {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.graph-thumbnail-image .recharts-default-legend {
+  display: none;
+}
+
+.graph-thumbnail-image svg {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+#home {
+  text-align: center;
+  margin: 50px;
+  display: flex;
+  flex-direction: column;
+}
+
+#home-name {
+  font-size: 60px;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.home-buttons {
+  padding: 10px;
+  position: relative;
+  outline: none;
+  width: 11em;
+  font-size: 30px;
+  color: white;
+  border: inset 2px #318f68;
+  border-radius: 10px;
+  background-image: linear-gradient(
+    45deg,
+    rgb(10, 54, 34) 45%,
+    rgb(0, 255, 126) 105%
+  );
+  box-shadow: 0px 0px 0px 1px rgb(19, 247, 152);
+  transition: 1s;
+  cursor: pointer;
+}
+
+.home-buttons:hover {
+  text-shadow: 0px 0px 10px rgb(19, 247, 100);
+  color: #202b47;
+  background-image: linear-gradient(45deg, #ddffee, #49cc7e);
+}
+
+#home-buttons-container {
+  justify-content: space-evenly;
+  display: flex;
+  margin: 80px;
+}
+
+img {
+  max-width: 100%;
+}
+
+label {
+  display: block;
+}
+
+nav a {
+  display: inline-block;
+  margin: 1em;
+}
+
+#navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-image: linear-gradient(45deg, #f3fffa, #1d6142);
+  border-radius: 0 0 1em 1em;
+  opacity: 0.8;
+  transition: transform 0.5s ease;
+}
+
+#navbar div {
+  display: flex;
+  align-items: center;
+}
+
+#navbar-home {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#navbar-home-img {
+  margin: 0px 20px;
+  height: 3em;
+}
+
+#navbar-home-name {
+  font-weight: bold;
+  font-style: italic;
+  color: black;
+  transition: 0.5s;
+}
+
+#navbar-home-name:hover {
+  text-shadow: 0px 0px 10px rgb(6, 251, 70);
+}
+
+#navbar-options {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+
+#navbar-options div {
+  margin: 0px 20px;
+}
+
+.navbar-options-name {
+  display: inline-block;
+  align-self: center;
+  color: white;
+}
+
+.navbar-options-buttons {
+  outline: none;
+  box-shadow: 0px 0px 0px 1px rgb(19, 247, 131);
+  border: inset 1px #318f41;
+  font-size: 1.3em;
+  color: #fff;
+  text-decoration: none;
+  padding: 5px 7px;
+  border-radius: 5px;
+  transition: color 1s, background-color 0.5s;
+}
+.navbar-options-buttons:hover {
+  color: #202b47;
+  background-image: linear-gradient(45deg, #ddffe7, #42d46f);
+}
+
+#profile {
+  margin: 50px;
+}
+
+#profile-content {
+  display: flex;
+}
+
+#profile-datasets {
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#profile-datasets-wrapper {
+  box-shadow: 0px 0px 0px 1px rgb(19, 247, 131);
+  border: inset 1px #318f41;
+  margin: 10px;
+  padding: 0px 15px;
+  border-radius: 5px;
+}
+
+#profile-datasets-wrapper-name {
+  transition: 0.5s;
+}
+
+#profile-datasets-wrapper-name:hover {
+  text-shadow: 0px 0px 1.5px rgb(22, 239, 148);
+}
+
+.profile-title {
+  border-bottom: double 3px rgb(42, 216, 127);
+}
+
+#profile-graphs {
+  display: flex;
+  flex-direction: column;
+  margin: 0px 50px;
+  align-items: center;
+}
+
+#profile-graphs-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.profile-graphs-single {
+  width: 25%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0px 0px 0px 1px rgb(19, 247, 131);
+  border: inset 1px #318f41;
+  padding: 10px 40px;
+  border-radius: 5px;
+  margin: 10px;
+  transition: 0.5s;
+}
+
+.profile-graphs-single:hover {
+  box-shadow: 0px 0px 10px 0.4px rgb(19, 247, 100);
+  border: inset 1px #318f57;
+}
+
+.profile-graphs-single > div > div {
+  width: 40% !important;
+  border-radius: 10px;
+  border: 0px !important;
+  opacity: 0.8;
+  text-align: center;
+  background-image: linear-gradient(45deg, #f3fffa, #1d6142) !important;
+}
+
+#graph-dataset > div > div.popup-content {
+  width: 50% !important;
+  border-radius: 10px;
+  border: 0px !important;
+  opacity: 0.8;
+  text-align: center;
+  background-image: linear-gradient(45deg, #f3fffa, #1d6142) !important;
+}
+
+.error-popup-div {
+  display: flex;
+  flex-direction: column;
+}
+
+.error-popup-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.popup-login-buttons {
+  outline: none;
+  padding: 3px 13px;
+  margin: 20px 10px 20px;
+  font-size: 15px;
+  color: white;
+  border: inset 2px #318f68;
+  border-radius: 5px;
+  background-image: linear-gradient(
+    45deg,
+    rgb(10, 54, 34) 45%,
+    rgb(0, 255, 126) 105%
+  );
+  box-shadow: 0px 0px 0px 1px rgb(19, 247, 152);
+  transition: color 1s, background-image 1.5s;
+}
+
+.popup-login-buttons:hover {
+  color: #202b47;
+  background-image: linear-gradient(45deg, #ddffee, #49cc7e);
+}
+
+.popup-login-buttons-no {
+  outline: none;
+  padding: 3px 10px;
+  margin: 20px 10px 20px;
+  font-size: 15px;
+  color: white;
+  border: inset 2px #8f3131;
+  border-radius: 5px;
+  background-image: linear-gradient(
+    45deg,
+    rgb(109, 20, 20) 45%,
+    rgb(255, 0, 0) 105%
+  );
+  box-shadow: 0px 0px 0px 1px rgb(247, 19, 19);
+  transition: color 1s, background-image 1.5s;
+}
+
+.popup-login-buttons-no:hover {
+  color: #000000;
+  background-image: linear-gradient(45deg, #ffdddd, #cc4949);
+}
+
+#popup-delete-buttons-yes {
+  outline: none;
+  padding: 3px 10px;
+  margin: 20px 10px 20px;
+  font-size: 15px;
+  color: white;
+  border: inset 2px #8f3131;
+  border-radius: 5px;
+  background-image: linear-gradient(
+    45deg,
+    rgb(109, 20, 20) 45%,
+    rgb(255, 0, 0) 105%
+  );
+  box-shadow: 0px 0px 0px 1px rgb(247, 19, 19);
+  transition: color 1s, background-image 1.5s;
+}
+
+#popup-delete-buttons-yes:hover {
+  color: #000000;
+  background-image: linear-gradient(45deg, #ffdddd, #cc4949);
+}
+
+#popup-delete-buttons-no {
+  outline: none;
+  padding: 3px 13px;
+  margin: 20px 10px 20px;
+  font-size: 15px;
+  color: white;
+  border: inset 2px #318f68;
+  border-radius: 5px;
+  background-image: linear-gradient(
+    45deg,
+    rgb(10, 54, 34) 45%,
+    rgb(0, 255, 126) 105%
+  );
+  box-shadow: 0px 0px 0px 1px rgb(19, 247, 152);
+  transition: color 1s, background-image 1.5s;
+}
+
+#popup-delete-buttons-no:hover {
+  color: #202b47;
+  background-image: linear-gradient(45deg, #ddffee, #49cc7e);
+}
+
+#popup-share {
+  display: flex;
+  flex-direction: column;
+}
+
+#popup-share-container {
+  display: flex;
+  margin: 2px;
+  padding: 2px 2px;
+}
+
+.popup-share-button {
+  outline: none;
+  box-shadow: 0px 0px 0px 1px rgb(86, 19, 247);
+  border: inset 1px #3b318f;
+  font-size: 1em;
+  color: #fff;
+  text-decoration: none;
+  padding: 3px 8px;
+  border-radius: 5px;
+  transition: color 1s, background-color 0.5s;
+  background: rgba(0, 0, 0, 0);
+  margin: 0px 5px;
+}
+.popup-share-button:hover {
+  color: #000000;
+  background-image: linear-gradient(45deg, #dde6ff, #425bd4);
+}
+
+.searches {
+  margin-top: 5em;
+}
+
+#searchbar-name {
+  text-align: center;
+}
+
+.searchbar-input {
+  display: block;
+  width: 250px;
+  margin: 20px auto 15px;
+  text-align: center;
+  outline: none;
+  font-size: 25px;
+  border: inset 2px #617180;
+  border-radius: 5px;
+  transition: 0.3s ease-in-out;
+}
+
+.searchbar-input:focus {
+  text-shadow: 0px 0px 3px rgb(19, 247, 142);
+  box-shadow: 0px 0px 1px 1.1px rgb(19, 247, 142);
+  border: inset 2px #318f71;
+}
+
+.search-results {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+.search-results-dataset {
+  width: 90%;
+  height: 30%;
+  margin: 10px;
+}
+
+.search-results-dataset-box {
+  width: 90%;
+  border-top: inset 1px rgb(19, 247, 131);
+  padding: 10px 35px;
+  margin-left: 30px;
+  margin-right: 30px;
+}
+.searchbar-select {
+  display: block;
+  height: 25px;
+  width: 300px;
+  margin: 20px auto 15px;
+}
+.searchbar-select select {
+  height: 25px;
+  width: 300px;
+}
+.searchbar-select button {
+  outline: none;
+  display: block;
+  margin: auto;
+  margin-top: 1.5em;
+  margin-bottom: 2em;
+  width: 150px;
+  font-size: 15px;
+  padding: 5px;
+  color: white;
+  border: inset 2px #318f68;
+  border-radius: 10px;
+  background-image: linear-gradient(
+    45deg,
+    rgb(10, 54, 34) 45%,
+    rgb(0, 255, 126) 105%
+  );
+  box-shadow: 0px 0px 0px 1px rgb(19, 247, 152);
+  transition: 1s;
+}
+.searchbar-select button:hover {
+  text-shadow: 0px 0px 10px rgb(19, 247, 100);
+  color: #202b47;
+  background-image: linear-gradient(45deg, #ddffee, #49cc7e);
+}
+
+#single-graph {
+  margin: 50px;
+}
+
+.single-graph-input {
+  display: block;
+  width: 90%;
+  margin: 10px auto 10px;
+  text-align: center;
+  outline: none;
+  font-size: 20px;
+  border: inset 2px #617180;
+  border-radius: 5px;
+  transition: 0.3s ease-in-out;
+  padding: 5px;
+}
+
+.single-graph-input:focus {
+  text-shadow: 0px 0px 3px rgb(19, 247, 142);
+  box-shadow: 0px 0px 1px 1.1px rgb(19, 247, 142);
+  border: inset 2px #318f71;
+}
+
+#single-graph-buttons {
+  display: flex;
+  margin: 30px;
+}
+
+#single-graph-buttons > div.popup-content {
+  outline: none;
+  width: unset !important;
+  border-radius: 5px;
+  border: 0px !important;
+  opacity: 0.8;
+  text-align: center;
+  background-image: linear-gradient(45deg, #bbb4de, #081d56) !important;
+}
+
+#single-graph-buttons-save {
+  outline: none;
+  padding: 5px 25px;
+  margin: 0px 10px;
+  font-size: 25px;
+  color: white;
+  border: inset 2px #318f68;
+  border-radius: 10px;
+  background-image: linear-gradient(
+    45deg,
+    rgb(10, 54, 34) 45%,
+    rgb(0, 255, 126) 105%
+  );
+  box-shadow: 0px 0px 0px 1px rgb(19, 247, 152);
+  transition: 1s;
+}
+
+#single-graph-buttons-save:hover {
+  text-shadow: 0px 0px 10px rgb(19, 247, 100);
+  color: #202b47;
+  background-image: linear-gradient(45deg, #ddffee, #49cc7e);
+}
+
+#single-graph-buttons-clone {
+  outline: none;
+  padding: 5px 15px;
+  margin: 0px 10px;
+  font-size: 25px;
+  color: white;
+  border: inset 2px #318b8f;
+  border-radius: 10px;
+  background-image: linear-gradient(
+    45deg,
+    rgb(10, 54, 54) 45%,
+    rgb(0, 208, 255) 105%
+  );
+  box-shadow: 0px 0px 0px 1px rgb(19, 215, 247);
+  transition: 1s;
+}
+
+#single-graph-buttons-clone:hover {
+  text-shadow: 0px 0px 10px rgb(19, 215, 247);
+  color: #203a47;
+  background-image: linear-gradient(45deg, #ddf4ff, #49a2cc);
+}
+
+#single-graph-buttons-share {
+  outline: none;
+  padding: 5px 15px;
+  margin: 0px 10px;
+  font-size: 25px;
+  color: white;
+  border: inset 2px #31418f;
+  border-radius: 10px;
+  background-image: linear-gradient(
+    45deg,
+    rgb(15, 17, 80) 45%,
+    rgb(0, 78, 255) 105%
+  );
+  box-shadow: 0px 0px 0px 1px rgb(44, 19, 247);
+  transition: 1s;
+}
+
+#single-graph-buttons-share:hover {
+  outline: none;
+  text-shadow: 0px 0px 1px rgb(19, 26, 247);
+  color: #202747;
+  background-image: linear-gradient(45deg, #e2ddff73, #5a66f3);
+}
+
+#single-graph-container {
+  display: flex;
+}
+
+#single-graph-container-chart {
+  width: 75%;
+}
+
+#single-graph-container-settings {
+  width: 25%;
+  margin: 20px 50px;
+}
+
+#single-graph-container-settings-container {
+  box-shadow: 0px 0px 0px 1px rgb(19, 247, 131);
+  border: inset 1px #318f41;
+  font-size: 1.3em;
+  text-decoration: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+}
+
+.single-graph-settings-buttons{
+  margin: 5px 30px;
+  font-size: 15px;
+  border-radius: 5px;
+  outline: none;
+}
+
+.toast > div {
+  opacity: 0.9;
+  top: 85px;
+  text-align: center;
+  font-size: 26px;
+  /* background: url(toast.jpg);
+  filter: hue-rotate(-50deg); */
+  background-image: linear-gradient(45deg, #1d6142, #f3fffa);
+  color: white;
+}
+
+.delete-dataset-and-graph {
+  height: 1.8em;
+  margin: 20px 10px 20px;
+  font-size: 15px;
+  color: white;
+  border: inset 2px #8f3131;
+  border-radius: 5px;
+  background-image: linear-gradient(
+    45deg,
+    rgb(109, 20, 20) 45%,
+    rgb(255, 0, 0) 105%
+  );
+  box-shadow: 0px 0px 0px 1px rgb(247, 19, 19);
+  transition: color 1s, background-image 1.5s;
+}
+
+.delete-dataset-and-graph:hover {
+  color: #000000;
+  background-image: linear-gradient(45deg, #ffdddd, #cc4949);
+}
+
+.delete-graph {
+  margin: 80px 10px 20px;
+  font-size: 15px;
+  color: white;
+  border: inset 2px #8f3131;
+  border-radius: 5px;
+  background-image: linear-gradient(
+    45deg,
+    rgb(109, 20, 20) 45%,
+    rgb(255, 0, 0) 105%
+  );
+  box-shadow: 0px 0px 0px 1px rgb(247, 19, 19);
+  transition: color 1s, background-image 1.5s;
+}
+
+.delete-graph:hover {
+  color: #000000;
+  background-image: linear-gradient(45deg, #ffdddd, #cc4949);
+}
+@media (max-width: 1500px) {
+  .graph-dataset-single-container {
+    width: 50%;
+  }
+}
+@media (max-width: 900px) {
+  .graph-dataset-single-container {
+    width: 80%;
+  }
+}
